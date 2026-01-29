@@ -10,10 +10,19 @@ bun add node-zaim
 
 ## Usage
 
+### Initialization
+
+If you already have an access token, you can initialize the client directly:
+
 ```typescript
 import { Zaim } from 'node-zaim';
 
-const zaim = new Zaim();
+const zaim = new Zaim({
+	consumerKey: 'your-consumer-key',
+	consumerSecret: 'your-consumer-secret',
+	accessToken: 'your-access-token',
+	accessTokenSecret: 'your-access-token-secret',
+});
 ```
 
 ## Contributing

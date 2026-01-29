@@ -11,9 +11,9 @@ bun add node-zaim
 ## Usage
 
 ```typescript
-import { greet } from 'node-zaim';
+import { Zaim } from 'node-zaim';
 
-console.log(greet('World')); // Hello, World!
+const zaim = new Zaim();
 ```
 
 ## Contributing

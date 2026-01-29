@@ -16,19 +16,22 @@ export class ZaimAuth {
 		consumerSecret: string,
 		accessToken = '',
 		accessTokenSecret = '',
+		oauthClient?: OAuth,
 	) {
 		this.accessToken = accessToken
 		this.accessTokenSecret = accessTokenSecret
 
-		this.oauth = new OAuth(
-			ZaimAuth.REQUEST_TOKEN_URL,
-			ZaimAuth.ACCESS_TOKEN_URL,
-			consumerKey,
-			consumerSecret,
-			ZaimAuth.API_VERSION,
-			null,
-			ZaimAuth.SIGNATURE_METHOD,
-		)
+		this.oauth =
+			oauthClient ||
+			new OAuth(
+				ZaimAuth.REQUEST_TOKEN_URL,
+				ZaimAuth.ACCESS_TOKEN_URL,
+				consumerKey,
+				consumerSecret,
+				ZaimAuth.API_VERSION,
+				null,
+				ZaimAuth.SIGNATURE_METHOD,
+			)
 	}
 
 	getAccessToken(): string {

@@ -1,3 +1,4 @@
+import type { OAuth } from 'oauth'
 import { ZaimAuth } from './auth'
 
 export interface ZaimConfig {
@@ -21,6 +22,10 @@ export interface ZaimConfig {
 	 * optional, can be set later
 	 */
 	accessTokenSecret?: string
+	/**
+	 * Custom OAuth client
+	 */
+	oauthClient?: OAuth
 }
 
 /**
@@ -31,6 +36,7 @@ export interface ZaimConfig {
  * @param config.consumerSecret Consumer Secret provided by Zaim
  * @param config.accessToken (Optional) Access Token
  * @param config.accessTokenSecret (Optional) Access Token Secret
+ * @param config.oauthClient (Optional) Custom OAuth client
  */
 export class Zaim {
 	private auth: ZaimAuth
@@ -41,6 +47,7 @@ export class Zaim {
 			config.consumerSecret,
 			config.accessToken,
 			config.accessTokenSecret,
+			config.oauthClient,
 		)
 	}
 

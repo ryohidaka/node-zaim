@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 import { Zaim } from '../src'
+import { MockOAuthClient } from './mocks'
 
 describe('Zaim', () => {
 	test('should initialize with credentials', () => {
@@ -26,5 +27,15 @@ describe('Zaim', () => {
 			consumerSecret: 'test-secret',
 		})
 		zaim.setAccessToken('new-token', 'new-secret')
+	})
+
+	test('should accept custom OAuth client', () => {
+		const mockOAuth = new MockOAuthClient()
+		const zaim = new Zaim({
+			consumerKey: 'test-key',
+			consumerSecret: 'test-secret',
+			oauthClient: mockOAuth.asOAuth(),
+		})
+		expect(zaim).toBeDefined()
 	})
 })

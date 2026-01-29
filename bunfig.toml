@@ -1,2 +1,7 @@
 [install]
 linker = "hoisted"
+
+[test]
+coveragePathIgnorePatterns = [
+  "test/mocks/**",
+]

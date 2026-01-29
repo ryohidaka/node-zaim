@@ -1,6 +1,7 @@
 import { describe, expect, test } from 'bun:test'
 import { OAuth } from 'oauth'
 import { ZaimAuth } from '../src/auth'
+import { MockOAuthClient } from './mocks'
 
 describe('ZaimAuth', () => {
 	test('should initialize with credentials', () => {
@@ -26,5 +27,17 @@ describe('ZaimAuth', () => {
 	test('should ZaimAuth be an OAuth client', () => {
 		const auth = new ZaimAuth('test-key', 'test-secret', '', '')
 		expect(auth.getOAuthClient() instanceof OAuth).toBe(true)
+	})
+
+	test('should accept custom OAuth client', () => {
+		const mockOAuth = new MockOAuthClient()
+		const auth = new ZaimAuth(
+			'test-key',
+			'test-secret',
+			'',
+			'',
+			mockOAuth.asOAuth(),
+		)
+		expect(auth.getOAuthClient()).toBe(mockOAuth.asOAuth())
 	})
 })

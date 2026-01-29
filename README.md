@@ -25,6 +25,12 @@ const zaim = new Zaim({
 });
 ```
 
+You can also set the access token later on an existing instance:
+
+```typescript
+zaim.setAccessToken(accessToken, accessTokenSecret);
+```
+
 ## Contributing
 
 Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.

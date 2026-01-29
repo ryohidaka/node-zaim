@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'bun:test'
+import { OAuth } from 'oauth'
 import { ZaimAuth } from '../src/auth'
 
 describe('ZaimAuth', () => {
@@ -20,5 +21,10 @@ describe('ZaimAuth', () => {
 		auth.setAccessToken('new-token', 'new-secret')
 		expect(auth.getAccessToken()).toBe('new-token')
 		expect(auth.getAccessTokenSecret()).toBe('new-secret')
+	})
+
+	test('should ZaimAuth be an OAuth client', () => {
+		const auth = new ZaimAuth('test-key', 'test-secret', '', '')
+		expect(auth.getOAuthClient() instanceof OAuth).toBe(true)
 	})
 })

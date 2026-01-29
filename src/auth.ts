@@ -1,15 +1,34 @@
+import { OAuth } from 'oauth'
+import { BASE_URL } from './constants'
+
 export class ZaimAuth {
+	private oauth: OAuth
 	private accessToken: string
 	private accessTokenSecret: string
 
+	private static readonly REQUEST_TOKEN_URL = `${BASE_URL}/v2/auth/request`
+	private static readonly ACCESS_TOKEN_URL = `${BASE_URL}/v2/auth/access`
+	private static readonly API_VERSION = '1.0'
+	private static readonly SIGNATURE_METHOD = 'HMAC-SHA1'
+
 	constructor(
-		_consumerKey: string,
-		_consumerSecret: string,
+		consumerKey: string,
+		consumerSecret: string,
 		accessToken = '',
 		accessTokenSecret = '',
 	) {
 		this.accessToken = accessToken
 		this.accessTokenSecret = accessTokenSecret
+
+		this.oauth = new OAuth(
+			ZaimAuth.REQUEST_TOKEN_URL,
+			ZaimAuth.ACCESS_TOKEN_URL,
+			consumerKey,
+			consumerSecret,
+			ZaimAuth.API_VERSION,
+			null,
+			ZaimAuth.SIGNATURE_METHOD,
+		)
 	}
 
 	getAccessToken(): string {
@@ -23,5 +42,9 @@ export class ZaimAuth {
 	setAccessToken(token: string, tokenSecret: string): void {
 		this.accessToken = token
 		this.accessTokenSecret = tokenSecret
+	}
+
+	getOAuthClient(): OAuth {
+		return this.oauth
 	}
 }

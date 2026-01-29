@@ -60,4 +60,14 @@ export class Zaim {
 	setAccessToken(token: string, tokenSecret: string): void {
 		this.auth.setAccessToken(token, tokenSecret)
 	}
+
+	getRequestToken(
+		callback = 'oob',
+	): Promise<{ token: string; tokenSecret: string }> {
+		return this.auth.getRequestToken(callback)
+	}
+
+	getAuthorizeUrl(requestToken: string): string {
+		return this.auth.getAuthorizeUrl(requestToken)
+	}
 }

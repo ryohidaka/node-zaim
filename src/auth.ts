@@ -50,4 +50,25 @@ export class ZaimAuth {
 	getOAuthClient(): OAuth {
 		return this.oauth
 	}
+
+	getRequestToken(
+		callback = 'oob',
+	): Promise<{ token: string; tokenSecret: string }> {
+		return new Promise((resolve, reject) => {
+			this.oauth.getOAuthRequestToken(
+				{ oauth_callback: callback },
+				(error, token: string, tokenSecret: string) => {
+					if (error) {
+						reject(new Error(`Failed to get request token: ${error}`))
+					} else {
+						resolve({ token, tokenSecret })
+					}
+				},
+			)
+		})
+	}
+
+	getAuthorizeUrl(requestToken: string): string {
+		return `https://auth.zaim.net/users/auth?oauth_token=${requestToken}`
+	}
 }

@@ -38,4 +38,32 @@ describe('Zaim', () => {
 		})
 		expect(zaim).toBeDefined()
 	})
+
+	test('should get request token successfully', async () => {
+		const mockOAuth = new MockOAuthClient()
+		const zaim = new Zaim({
+			consumerKey: 'test-key',
+			consumerSecret: 'test-secret',
+			accessToken: 'token',
+			accessTokenSecret: 'secret',
+			oauthClient: mockOAuth.asOAuth(),
+		})
+
+		const { token, tokenSecret } = await zaim.getRequestToken()
+		expect(token).toBe('mock_request_token')
+		expect(tokenSecret).toBe('mock_request_token_secret')
+	})
+
+	test('should generate authorize URL', () => {
+		const mockOAuth = new MockOAuthClient()
+		const zaim = new Zaim({
+			consumerKey: 'test-key',
+			consumerSecret: 'test-secret',
+			accessToken: 'token',
+			accessTokenSecret: 'secret',
+			oauthClient: mockOAuth.asOAuth(),
+		})
+		const url = zaim.getAuthorizeUrl('test-token')
+		expect(url).toBe('https://auth.zaim.net/users/auth?oauth_token=test-token')
+	})
 })

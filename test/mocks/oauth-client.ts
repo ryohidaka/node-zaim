@@ -60,6 +60,24 @@ export class MockOAuthClient {
 		}
 	}
 
+	getOAuthAccessToken(
+		_token: string,
+		_tokenSecret: string,
+		_verifier: string,
+		callback: (
+			error: { statusCode: number; data?: string } | null,
+			accessToken: string,
+			accessTokenSecret: string,
+			results?: unknown,
+		) => void,
+	): void {
+		if (this.shouldFail) {
+			callback(this.failureError, '', '')
+		} else {
+			callback(null, 'mock_access_token', 'mock_access_token_secret')
+		}
+	}
+
 	// Helper method to cast to OAuth type
 	asOAuth(): OAuth {
 		return this as unknown as OAuth

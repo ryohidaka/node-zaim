@@ -70,4 +70,16 @@ export class Zaim {
 	getAuthorizeUrl(requestToken: string): string {
 		return this.auth.getAuthorizeUrl(requestToken)
 	}
+
+	getAccessToken(
+		requestToken: string,
+		requestTokenSecret: string,
+		oauthVerifier: string,
+	): Promise<{ accessToken: string; accessTokenSecret: string }> {
+		return this.auth.getOAuthAccessToken(
+			requestToken,
+			requestTokenSecret,
+			oauthVerifier,
+		)
+	}
 }

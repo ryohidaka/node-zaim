@@ -94,4 +94,42 @@ describe('ZaimAuth', () => {
 		const url = auth.getAuthorizeUrl('test-token')
 		expect(url).toBe('https://auth.zaim.net/users/auth?oauth_token=test-token')
 	})
+
+	test('should get access token successfully', async () => {
+		const mockOAuth = new MockOAuthClient()
+		const auth = new ZaimAuth(
+			'test-key',
+			'test-secret',
+			'',
+			'',
+			mockOAuth.asOAuth(),
+		)
+
+		const { accessToken, accessTokenSecret } = await auth.getOAuthAccessToken(
+			'request-token',
+			'request-secret',
+			'verifier',
+		)
+
+		expect(accessToken).toBe('mock_access_token')
+		expect(accessTokenSecret).toBe('mock_access_token_secret')
+		expect(auth.getAccessToken()).toBe('mock_access_token')
+		expect(auth.getAccessTokenSecret()).toBe('mock_access_token_secret')
+	})
+
+	test('should throw error on access token failure', async () => {
+		const mockOAuth = new MockOAuthClient()
+		mockOAuth.setShouldFail(true, { statusCode: 401 })
+		const auth = new ZaimAuth(
+			'test-key',
+			'test-secret',
+			'',
+			'',
+			mockOAuth.asOAuth(),
+		)
+
+		await expect(
+			auth.getOAuthAccessToken('token', 'secret', 'verifier'),
+		).rejects.toThrow('Failed to get access token')
+	})
 })

@@ -71,4 +71,27 @@ export class ZaimAuth {
 	getAuthorizeUrl(requestToken: string): string {
 		return `https://auth.zaim.net/users/auth?oauth_token=${requestToken}`
 	}
+
+	async getOAuthAccessToken(
+		requestToken: string,
+		requestTokenSecret: string,
+		oauthVerifier: string,
+	): Promise<{ accessToken: string; accessTokenSecret: string }> {
+		return new Promise((resolve, reject) => {
+			this.oauth.getOAuthAccessToken(
+				requestToken,
+				requestTokenSecret,
+				oauthVerifier,
+				(error, accessToken, accessTokenSecret) => {
+					if (error) {
+						reject(new Error(`Failed to get access token: ${error}`))
+					} else {
+						this.accessToken = accessToken
+						this.accessTokenSecret = accessTokenSecret
+						resolve({ accessToken, accessTokenSecret })
+					}
+				},
+			)
+		})
+	}
 }

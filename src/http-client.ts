@@ -12,7 +12,12 @@ export class HttpClient {
 	 * Executes the OAuth request, handles the Promise wrapper, and parses JSON.
 	 */
 	private execute<T>(
-		fn: (cb: (e: Error, d?: string | Buffer<ArrayBufferLike>) => void) => void,
+		fn: (
+			cb: (
+				e: { statusCode: number; data?: string },
+				d?: string | Buffer<ArrayBufferLike>,
+			) => void,
+		) => void,
 	): Promise<T> {
 		return new Promise((resolve, reject) => {
 			fn((err, data) => {

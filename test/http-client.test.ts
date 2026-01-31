@@ -28,9 +28,16 @@ describe('HttpClient', () => {
 			const testPath = '/test/endpoint'
 			const mockResponse = { id: 1, name: 'Test User' }
 
-			mockOAuth.get = mock((_url, _token, _secret, callback) => {
-				callback(null, JSON.stringify(mockResponse))
-			}) as OAuth['get']
+			mockOAuth.get = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					callback: (error: unknown, data?: string | Buffer) => void,
+				) => {
+					callback(null, JSON.stringify(mockResponse))
+				},
+			) as OAuth['get']
 
 			// Act
 			const result = await httpClient.get(testPath)
@@ -51,9 +58,16 @@ describe('HttpClient', () => {
 			const testPath = '/test/endpoint'
 			const mockError = { statusCode: 401, data: 'Unauthorized' }
 
-			mockOAuth.get = mock((_url, _token, _secret, callback) => {
-				callback(mockError, undefined)
-			}) as OAuth['get']
+			mockOAuth.get = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					callback: (error: unknown, data?: string | Buffer) => void,
+				) => {
+					callback(mockError, undefined)
+				},
+			) as OAuth['get']
 
 			// Act & Assert
 			await expect(httpClient.get(testPath)).rejects.toEqual(mockError)
@@ -64,9 +78,16 @@ describe('HttpClient', () => {
 			const testPath = '/test/endpoint'
 			const invalidJSON = 'not a json'
 
-			mockOAuth.get = mock((_url, _token, _secret, callback) => {
-				callback(null, invalidJSON)
-			}) as OAuth['get']
+			mockOAuth.get = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					callback: (error: unknown, data?: string | Buffer) => void,
+				) => {
+					callback(null, invalidJSON)
+				},
+			) as OAuth['get']
 
 			// Act & Assert
 			await expect(httpClient.get(testPath)).rejects.toThrow(
@@ -79,9 +100,16 @@ describe('HttpClient', () => {
 			const testPath = '/test/endpoint'
 			const arrayResponse = JSON.stringify([1, 2, 3])
 
-			mockOAuth.get = mock((_url, _token, _secret, callback) => {
-				callback(null, arrayResponse)
-			}) as OAuth['get']
+			mockOAuth.get = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					callback: (error: unknown, data?: string | Buffer) => void,
+				) => {
+					callback(null, arrayResponse)
+				},
+			) as OAuth['get']
 
 			// Act & Assert
 			await expect(httpClient.get(testPath)).rejects.toThrow(
@@ -94,9 +122,16 @@ describe('HttpClient', () => {
 			const testPath = '/test/endpoint'
 			const nullResponse = JSON.stringify(null)
 
-			mockOAuth.get = mock((_url, _token, _secret, callback) => {
-				callback(null, nullResponse)
-			}) as OAuth['get']
+			mockOAuth.get = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					callback: (error: unknown, data?: string | Buffer) => void,
+				) => {
+					callback(null, nullResponse)
+				},
+			) as OAuth['get']
 
 			// Act & Assert
 			await expect(httpClient.get(testPath)).rejects.toThrow(
@@ -109,9 +144,16 @@ describe('HttpClient', () => {
 			const testPath = '/test/endpoint'
 			const primitiveResponse = JSON.stringify('string value')
 
-			mockOAuth.get = mock((_url, _token, _secret, callback) => {
-				callback(null, primitiveResponse)
-			}) as OAuth['get']
+			mockOAuth.get = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					callback: (error: unknown, data?: string | Buffer) => void,
+				) => {
+					callback(null, primitiveResponse)
+				},
+			) as OAuth['get']
 
 			// Act & Assert
 			await expect(httpClient.get(testPath)).rejects.toThrow(
@@ -136,9 +178,16 @@ describe('HttpClient', () => {
 				},
 			}
 
-			mockOAuth.get = mock((_url, _token, _secret, callback) => {
-				callback(null, JSON.stringify(complexResponse))
-			}) as OAuth['get']
+			mockOAuth.get = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					callback: (error: unknown, data?: string | Buffer) => void,
+				) => {
+					callback(null, JSON.stringify(complexResponse))
+				},
+			) as OAuth['get']
 
 			// Act
 			const result = await httpClient.get(testPath)
@@ -153,9 +202,16 @@ describe('HttpClient', () => {
 			const mockResponse = { data: 'test' }
 			const buffer = Buffer.from(JSON.stringify(mockResponse))
 
-			mockOAuth.get = mock((_url, _token, _secret, callback) => {
-				callback(null, buffer)
-			}) as OAuth['get']
+			mockOAuth.get = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					callback: (error: unknown, data?: string | Buffer) => void,
+				) => {
+					callback(null, buffer)
+				},
+			) as OAuth['get']
 
 			// Act
 			const result = await httpClient.get(testPath)

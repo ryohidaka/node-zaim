@@ -1,4 +1,5 @@
 import type { OAuth } from 'oauth'
+import { UserApi } from './api'
 import { ZaimAuth } from './auth'
 import { HttpClient } from './http-client'
 
@@ -43,6 +44,8 @@ export class Zaim {
 	private auth: ZaimAuth
 	private http: HttpClient
 
+	public readonly user: UserApi
+
 	constructor(config: ZaimConfig) {
 		this.auth = new ZaimAuth(
 			config.consumerKey,
@@ -57,6 +60,8 @@ export class Zaim {
 			this.auth.getAccessToken(),
 			this.auth.getAccessTokenSecret(),
 		)
+
+		this.user = new UserApi(this)
 	}
 
 	/**

@@ -63,6 +63,27 @@ You can also set the access token later on an existing instance:
 zaim.setAccessToken(accessToken, accessTokenSecret);
 ```
 
+### User
+
+#### `verify()`
+
+Representation of the requesting user if authentication was successful.
+
+```typescript
+const user = await zaim.user.verify();
+console.log(user.name); // 'MyName'
+console.log(user.inputCount); // 100
+console.log(user.currencyCode); // 'JPY'
+```
+
+## API Reference
+
+| Endpoint             | Method | Description                                                            |
+| -------------------- | ------ | ---------------------------------------------------------------------- |
+| `zaim.user.verify()` | GET    | Representation of the requesting user if authentication was successful |
+
+For full details on each endpoint, refer to the [Zaim API documentation](https://dev.zaim.net/home/api).
+
 ## Contributing
 
 Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.

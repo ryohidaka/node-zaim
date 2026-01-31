@@ -68,14 +68,39 @@ export class MockOAuthClient {
 			error: { statusCode: number; data?: string } | null,
 			accessToken: string,
 			accessTokenSecret: string,
-			results?: unknown,
+			results: unknown,
 		) => void,
 	): void {
 		if (this.shouldFail) {
-			callback(this.failureError, '', '')
+			callback(this.failureError, '', '', undefined)
 		} else {
-			callback(null, 'mock_access_token', 'mock_access_token_secret')
+			callback(null, 'mock_access_token', 'mock_access_token_secret', {})
 		}
+	}
+
+	get(
+		url: string,
+		_accessToken: string,
+		_accessTokenSecret: string,
+		callback: (
+			error: { statusCode: number; data?: string } | null,
+			data?: string | Buffer,
+		) => void,
+	): ReturnType<OAuth['get']> {
+		if (this.shouldFail) {
+			callback(this.failureError, '')
+		} else {
+			const response = this.mockResponses.get(url)
+			if (response) {
+				callback(null, JSON.stringify(response))
+			} else {
+				callback(
+					{ statusCode: 404, data: `No mock response set for URL: ${url}` },
+					'',
+				)
+			}
+		}
+		return {} as ReturnType<OAuth['get']>
 	}
 
 	// Helper method to cast to OAuth type

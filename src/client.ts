@@ -1,5 +1,6 @@
 import type { OAuth } from 'oauth'
 import { ZaimAuth } from './auth'
+import { HttpClient } from './http-client'
 
 export interface ZaimConfig {
 	/**
@@ -40,6 +41,7 @@ export interface ZaimConfig {
  */
 export class Zaim {
 	private auth: ZaimAuth
+	private http: HttpClient
 
 	constructor(config: ZaimConfig) {
 		this.auth = new ZaimAuth(
@@ -48,6 +50,12 @@ export class Zaim {
 			config.accessToken,
 			config.accessTokenSecret,
 			config.oauthClient,
+		)
+
+		this.http = new HttpClient(
+			this.auth.getOAuthClient(),
+			this.auth.getAccessToken(),
+			this.auth.getAccessTokenSecret(),
 		)
 	}
 
@@ -81,5 +89,9 @@ export class Zaim {
 			requestTokenSecret,
 			oauthVerifier,
 		)
+	}
+
+	getHttpClient(): HttpClient {
+		return this.http
 	}
 }

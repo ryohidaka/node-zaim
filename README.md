@@ -83,17 +83,26 @@ console.log(user.currencyCode); // 'JPY'
 Showing the list of input data
 
 ```typescript
-const money = await zaim.money.list();
-console.log(money[0].amount); // 10000
-console.log(money[0].mode); // 'income'
+// Get all records
+const allMoney = await zaim.money.list();
+console.log(allMoney[0].amount); // 10000
+console.log(allMoney[0].mode); // 'income'
+
+// Filter by date range and type
+const payments = await zaim.money.list({
+	mode: 'payment',
+	startDate: '2024-01-01',
+	endDate: '2024-12-31',
+	limit: 50,
+});
 ```
 
 ## API Reference
 
-| Endpoint             | Method | Description                                                            |
-| -------------------- | ------ | ---------------------------------------------------------------------- |
-| `zaim.user.verify()` | GET    | Representation of the requesting user if authentication was successful |
-| `zaim.money.list()`  | GET    | Showing the list of input data                                         |
+| Endpoint                   | Method | Description                                                            |
+| -------------------------- | ------ | ---------------------------------------------------------------------- |
+| `zaim.user.verify()`       | GET    | Representation of the requesting user if authentication was successful |
+| `zaim.money.list(params?)` | GET    | Showing the list of input data                                         |
 
 For full details on each endpoint, refer to the [Zaim API documentation](https://dev.zaim.net/home/api).
 

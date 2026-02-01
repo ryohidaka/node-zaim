@@ -184,3 +184,56 @@ export const MoneyListResponseSchema: z.ZodObject<{
 	money: z.array(MoneyItemSchema),
 	requested: z.number(),
 })
+
+export const MoneyQueryParamsSchema: z.ZodObject<{
+	categoryId: z.ZodOptional<z.ZodNumber>
+	genreId: z.ZodOptional<z.ZodNumber>
+	mode: z.ZodOptional<
+		z.ZodEnum<{
+			income: 'income'
+			payment: 'payment'
+			transfer: 'transfer'
+		}>
+	>
+	order: z.ZodOptional<
+		z.ZodEnum<{
+			date: 'date'
+			id: 'id'
+		}>
+	>
+	startDate: z.ZodOptional<z.ZodString>
+	endDate: z.ZodOptional<z.ZodString>
+	page: z.ZodOptional<z.ZodNumber>
+	limit: z.ZodOptional<z.ZodNumber>
+}> = z.object({
+	/** narrow down by category_id */
+	categoryId: z
+		.number()
+		.positive('categoryId must be a positive number')
+		.optional(),
+	/** narrow down by genre_id */
+	genreId: z.number().positive('genreId must be a positive number').optional(),
+	/** narrow down by type (`payment` or `income` or `transfer`) */
+	mode: z.enum(['payment', 'income', 'transfer']).optional(),
+	/** sort by id or date (default : `date`) */
+	order: z.enum(['id', 'date']).optional(),
+	/** the first date (`Y-m-d` format) */
+	startDate: z
+		.string()
+		.regex(/^\d{4}-\d{2}-\d{2}$/, 'startDate must be in YYYY-MM-DD format')
+		.optional(),
+	/** the last date (`Y-m-d` format) */
+	endDate: z
+		.string()
+		.regex(/^\d{4}-\d{2}-\d{2}$/, 'endDate must be in YYYY-MM-DD format')
+		.optional(),
+	/** number of current page (default `1`) */
+	page: z.number().int().positive('page must be a positive number').optional(),
+	/** number of items per page (default `20`, max `100`) */
+	limit: z
+		.number()
+		.int()
+		.min(1, 'limit must be between 1 and 100')
+		.max(100, 'limit must be between 1 and 100')
+		.optional(),
+})

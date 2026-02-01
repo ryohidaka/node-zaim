@@ -179,4 +179,88 @@ describe('MoneyApi', () => {
 			)
 		})
 	})
+	describe('list (grouped)', () => {
+		test('should get grouped money list', async () => {
+			// Arrange
+			const mockOAuth = new MockOAuthClient()
+			const mockResponse = {
+				money: [
+					{
+						amount: 100,
+						to_account_id: 0,
+						from_account_id: 34555,
+						date: '2011-11-07',
+						receipt_id: 100293844,
+						mode: 'payment',
+						place_uid: '',
+						category_id: 101,
+						genre_id: 10101,
+						currency_code: 'JPY',
+						data: [
+							{
+								id: 382,
+								category_id: 101,
+								genre_id: 10101,
+								amount: 100,
+								comment: '',
+								active: 1,
+								created: '2011-11-07 01:12:00',
+								name: '',
+								receipt_id: 100293844,
+							},
+						],
+						place: 'サブウェイ',
+					},
+				],
+				requested: 1321782829,
+			}
+
+			mockOAuth.setMockResponse(
+				'https://api.zaim.net/v2/home/money?mapping=1&mode=payment&start_date=2024-01-01&end_date=2024-01-31&page=1&limit=50&group_by=receipt_id',
+				mockResponse,
+			)
+
+			const zaim = new Zaim({
+				consumerKey: 'test-key',
+				consumerSecret: 'test-secret',
+				accessToken: 'test-token',
+				accessTokenSecret: 'test-secret',
+				oauthClient: mockOAuth.asOAuth(),
+			})
+
+			// Act
+			const params: MoneyQueryParams = {
+				mode: 'payment',
+				startDate: '2024-01-01',
+				endDate: '2024-01-31',
+				limit: 50,
+				page: 1,
+				groupBy: 'receipt_id',
+			}
+			const result = await zaim.money.list(params)
+
+			// Assert - Check all fields are properly transformed
+			expect(result[0].amount).toBe(100)
+			expect(result[0].toAccountId).toBe(null)
+			expect(result[0].fromAccountId).toBe(34555)
+			expect(result[0].date).toBe('2011-11-07')
+			expect(result[0].receiptId).toBe(100293844)
+			expect(result[0].mode).toBe('payment')
+			expect(result[0].placeUid).toBe(null)
+			expect(result[0].categoryId).toBe(101)
+			expect(result[0].genreId).toBe(10101)
+			expect(result[0].currencyCode).toBe('JPY')
+			expect(result[0].place).toBe('サブウェイ')
+
+			expect(result[0].data[0].id).toBe(382)
+			expect(result[0].data[0].categoryId).toBe(101)
+			expect(result[0].data[0].genreId).toBe(10101)
+			expect(result[0].data[0].amount).toBe(100)
+			expect(result[0].data[0].comment).toBe(null)
+			expect(result[0].data[0].active).toBe(true)
+			expect(result[0].data[0].created).toEqual(new Date('2011-11-07 01:12:00'))
+			expect(result[0].data[0].name).toBe('')
+			expect(result[0].data[0].receiptId).toBe(100293844)
+		})
+	})
 })

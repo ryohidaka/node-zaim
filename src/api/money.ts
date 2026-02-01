@@ -1,9 +1,14 @@
-import type z from 'zod'
-import { MoneyListResponseSchema, MoneyQueryParamsSchema } from '@/schemas'
+import type { z } from 'zod'
+import {
+	GroupedMoneyListResponseSchema,
+	MoneyListResponseSchema,
+	MoneyQueryParamsSchema,
+} from '@/schemas'
 import type { MoneyQueryParams } from '@/types'
 import type { Zaim } from '../client'
 
 type MoneyListResponse = z.infer<typeof MoneyListResponseSchema>
+type GroupedMoneyListResponse = z.infer<typeof GroupedMoneyListResponseSchema>
 
 export class MoneyApi {
 	constructor(private client: Zaim) {}
@@ -42,7 +47,12 @@ export class MoneyApi {
 	 * });
 	 * ```
 	 */
-	async list(params?: MoneyQueryParams): Promise<MoneyListResponse['money']> {
+	async list(
+		params: Omit<MoneyQueryParams, 'group_by'> & { group_by: 'receipt_id' },
+	): Promise<GroupedMoneyListResponse['money']>
+	async list(
+		params?: MoneyQueryParams,
+	): Promise<MoneyListResponse['money'] | GroupedMoneyListResponse['money']> {
 		if (params) {
 			MoneyQueryParamsSchema.parse(params)
 		}
@@ -74,11 +84,19 @@ export class MoneyApi {
 			if (params.limit !== undefined) {
 				queryParams.limit = String(params.limit ?? 20)
 			}
+			if (params.groupBy !== undefined) {
+				queryParams.group_by = params.groupBy
+			}
 		}
 
 		const queryString = new URLSearchParams(queryParams).toString()
 		const path = `/v2/home/money?${queryString}`
 		const response = await this.client.getHttpClient().get(path)
+
+		if (params?.groupBy === 'receipt_id') {
+			const { money } = GroupedMoneyListResponseSchema.parse(response)
+			return money
+		}
 
 		const { money } = MoneyListResponseSchema.parse(response)
 		return money

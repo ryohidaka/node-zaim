@@ -205,6 +205,7 @@ export const MoneyQueryParamsSchema: z.ZodObject<{
 	endDate: z.ZodOptional<z.ZodString>
 	page: z.ZodOptional<z.ZodNumber>
 	limit: z.ZodOptional<z.ZodNumber>
+	groupBy: z.ZodOptional<z.ZodLiteral<'receipt_id'>>
 }> = z.object({
 	/** narrow down by category_id */
 	categoryId: z
@@ -236,4 +237,6 @@ export const MoneyQueryParamsSchema: z.ZodObject<{
 		.min(1, 'limit must be between 1 and 100')
 		.max(100, 'limit must be between 1 and 100')
 		.optional(),
+	/** if you set as `receipt_id`, Zaim makes the response group by the `receipt_id` */
+	groupBy: z.literal('receipt_id').optional(),
 })

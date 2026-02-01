@@ -76,11 +76,24 @@ console.log(user.inputCount); // 100
 console.log(user.currencyCode); // 'JPY'
 ```
 
+### Money
+
+#### `list()`
+
+Showing the list of input data
+
+```typescript
+const money = await zaim.money.list();
+console.log(money[0].amount); // 10000
+console.log(money[0].mode); // 'income'
+```
+
 ## API Reference
 
 | Endpoint             | Method | Description                                                            |
 | -------------------- | ------ | ---------------------------------------------------------------------- |
 | `zaim.user.verify()` | GET    | Representation of the requesting user if authentication was successful |
+| `zaim.money.list()`  | GET    | Showing the list of input data                                         |
 
 For full details on each endpoint, refer to the [Zaim API documentation](https://dev.zaim.net/home/api).
 

@@ -1,5 +1,5 @@
 import type { OAuth } from 'oauth'
-import { UserApi } from './api'
+import { MoneyApi, UserApi } from './api'
 import { ZaimAuth } from './auth'
 import { HttpClient } from './http-client'
 
@@ -45,6 +45,7 @@ export class Zaim {
 	private http: HttpClient
 
 	public readonly user: UserApi
+	public readonly money: MoneyApi
 
 	constructor(config: ZaimConfig) {
 		this.auth = new ZaimAuth(
@@ -62,6 +63,7 @@ export class Zaim {
 		)
 
 		this.user = new UserApi(this)
+		this.money = new MoneyApi(this)
 	}
 
 	/**

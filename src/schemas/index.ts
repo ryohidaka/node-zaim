@@ -1,5 +1,6 @@
 export * from './category'
 export * from './common'
+export * from './genre'
 export * from './grouped-money'
 export * from './money'
 export * from './user'

@@ -97,12 +97,24 @@ const payments = await zaim.money.list({
 });
 ```
 
+### Category
+
+#### `list()`
+
+Showing the list of your categories
+
+```typescript
+const categories = await zaim.category.list();
+console.log(categories[0].name); // 'Food'
+```
+
 ## API Reference
 
 | Endpoint                   | Method | Description                                                            |
 | -------------------------- | ------ | ---------------------------------------------------------------------- |
 | `zaim.user.verify()`       | GET    | Representation of the requesting user if authentication was successful |
 | `zaim.money.list(params?)` | GET    | Showing the list of input data                                         |
+| `zaim.category.list()`     | GET    | Showing the list of your categories                                    |
 
 For full details on each endpoint, refer to the [Zaim API documentation](https://dev.zaim.net/home/api).
 

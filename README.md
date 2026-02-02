@@ -119,6 +119,17 @@ const genres = await zaim.genre.list();
 console.log(genres[0].name); // 'Geocery'
 ```
 
+### Account
+
+#### `list()`
+
+Showing the list of your accounts
+
+```typescript
+const accounts = await zaim.account.list();
+console.log(accounts[0].name); // 'Credit card'
+```
+
 ## API Reference
 
 | Endpoint                   | Method | Description                                                            |
@@ -127,6 +138,7 @@ console.log(genres[0].name); // 'Geocery'
 | `zaim.money.list(params?)` | GET    | Showing the list of input data                                         |
 | `zaim.category.list()`     | GET    | Showing the list of your categories                                    |
 | `zaim.genre.list()`        | GET    | Showing the list of your genres                                        |
+| `zaim.account.list()`      | GET    | Showing the list of your accounts                                      |
 
 For full details on each endpoint, refer to the [Zaim API documentation](https://dev.zaim.net/home/api).
 

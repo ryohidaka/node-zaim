@@ -49,4 +49,72 @@ describe('AccountApi', () => {
 			expect(result[0].parentAccountId).toBe(null)
 		})
 	})
+
+	describe('default', () => {
+		test('should get default account list successfully in Japanese (default)', async () => {
+			const mockOAuth = new MockOAuthClient()
+			const mockResponse = {
+				accounts: [
+					{
+						id: 1,
+						name: 'お財布',
+					},
+				],
+				requested: 1669618091,
+			}
+
+			mockOAuth.setMockResponse(
+				'https://api.zaim.net/v2/account?lang=ja',
+				mockResponse,
+			)
+
+			const zaim = new Zaim({
+				consumerKey: 'test-key',
+				consumerSecret: 'test-secret',
+				accessToken: 'test-token',
+				accessTokenSecret: 'test-secret',
+				oauthClient: mockOAuth.asOAuth(),
+			})
+
+			// Act
+			const result = await zaim.account.default()
+
+			// Assert - Check all fields are properly transformed
+			expect(result[0].id).toBe(1)
+			expect(result[0].name).toBe('お財布')
+		})
+
+		test('should get default account list successfully in English', async () => {
+			const mockOAuth = new MockOAuthClient()
+			const mockResponse = {
+				accounts: [
+					{
+						id: 1,
+						name: 'Wallet',
+					},
+				],
+				requested: 1669618091,
+			}
+
+			mockOAuth.setMockResponse(
+				'https://api.zaim.net/v2/account?lang=en',
+				mockResponse,
+			)
+
+			const zaim = new Zaim({
+				consumerKey: 'test-key',
+				consumerSecret: 'test-secret',
+				accessToken: 'test-token',
+				accessTokenSecret: 'test-secret',
+				oauthClient: mockOAuth.asOAuth(),
+			})
+
+			// Act
+			const result = await zaim.account.default('en')
+
+			// Assert - Check all fields are properly transformed
+			expect(result[0].id).toBe(1)
+			expect(result[0].name).toBe('Wallet')
+		})
+	})
 })

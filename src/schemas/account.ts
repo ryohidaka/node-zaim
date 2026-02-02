@@ -104,3 +104,27 @@ export const AccountListResponseSchema: z.ZodObject<{
 	accounts: z.array(AccountItemSchema),
 	requested: z.number(),
 })
+
+export const DefaultAccountItemSchema: z.ZodObject<{
+	id: z.ZodNumber
+	name: z.ZodString
+}> = z.object({
+	id: z.number(),
+	name: z.string(),
+})
+
+export const DefaultAccountListResponseSchema: z.ZodObject<{
+	accounts: z.ZodArray<
+		z.ZodObject<
+			{
+				id: z.ZodNumber
+				name: z.ZodString
+			},
+			z.core.$strip
+		>
+	>
+	requested: z.ZodNumber
+}> = z.object({
+	accounts: z.array(DefaultAccountItemSchema),
+	requested: z.number(),
+})

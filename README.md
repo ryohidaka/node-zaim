@@ -130,15 +130,25 @@ const accounts = await zaim.account.list();
 console.log(accounts[0].name); // 'Credit card'
 ```
 
+#### `default()`
+
+Get default account list
+
+```typescript
+const accounts = await zaim.account.default('en');
+console.log(accounts[0].name); // 'Wallet'
+```
+
 ## API Reference
 
-| Endpoint                   | Method | Description                                                            |
-| -------------------------- | ------ | ---------------------------------------------------------------------- |
-| `zaim.user.verify()`       | GET    | Representation of the requesting user if authentication was successful |
-| `zaim.money.list(params?)` | GET    | Showing the list of input data                                         |
-| `zaim.category.list()`     | GET    | Showing the list of your categories                                    |
-| `zaim.genre.list()`        | GET    | Showing the list of your genres                                        |
-| `zaim.account.list()`      | GET    | Showing the list of your accounts                                      |
+| Endpoint                      | Method | Description                                                            |
+| ----------------------------- | ------ | ---------------------------------------------------------------------- |
+| `zaim.user.verify()`          | GET    | Representation of the requesting user if authentication was successful |
+| `zaim.money.list(params?)`    | GET    | Showing the list of input data                                         |
+| `zaim.category.list()`        | GET    | Showing the list of your categories                                    |
+| `zaim.genre.list()`           | GET    | Showing the list of your genres                                        |
+| `zaim.account.list()`         | GET    | Showing the list of your accounts                                      |
+| `zaim.account.default(lang?)` | GET    | List default accounts                                                  |
 
 For full details on each endpoint, refer to the [Zaim API documentation](https://dev.zaim.net/home/api).
 

@@ -104,3 +104,38 @@ export const CategoryListResponseSchema: z.ZodObject<{
 	categories: z.array(CategoryItemSchema),
 	requested: z.number(),
 })
+
+export const DefaultCategoryItemSchema: z.ZodObject<{
+	id: z.ZodNumber
+	mode: z.ZodEnum<{
+		income: 'income'
+		payment: 'payment'
+		transfer: 'transfer'
+	}>
+	name: z.ZodString
+}> = z.object({
+	id: z.number(),
+	mode: MoneyModeSchema,
+	name: z.string(),
+})
+
+export const DefaultCategoryListResponseSchema: z.ZodObject<{
+	categories: z.ZodArray<
+		z.ZodObject<
+			{
+				id: z.ZodNumber
+				mode: z.ZodEnum<{
+					income: 'income'
+					payment: 'payment'
+					transfer: 'transfer'
+				}>
+				name: z.ZodString
+			},
+			z.core.$strip
+		>
+	>
+	requested: z.ZodNumber
+}> = z.object({
+	categories: z.array(DefaultCategoryItemSchema),
+	requested: z.number(),
+})

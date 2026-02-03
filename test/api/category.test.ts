@@ -47,4 +47,76 @@ describe('CategoryApi', () => {
 			expect(result[0].modified).toEqual(new Date('2013-01-01 00:00:00'))
 		})
 	})
+
+	describe('default', () => {
+		test('should get default category list successfully in Japanese (default)', async () => {
+			const mockOAuth = new MockOAuthClient()
+			const mockResponse = {
+				categories: [
+					{
+						id: 101,
+						mode: 'payment',
+						name: '食料品',
+					},
+				],
+				requested: 1669618091,
+			}
+
+			mockOAuth.setMockResponse(
+				'https://api.zaim.net/v2/category?lang=ja',
+				mockResponse,
+			)
+
+			const zaim = new Zaim({
+				consumerKey: 'test-key',
+				consumerSecret: 'test-secret',
+				accessToken: 'test-token',
+				accessTokenSecret: 'test-secret',
+				oauthClient: mockOAuth.asOAuth(),
+			})
+
+			// Act
+			const result = await zaim.category.default()
+
+			// Assert - Check all fields are properly transformed
+			expect(result[0].id).toBe(101)
+			expect(result[0].mode).toBe('payment')
+			expect(result[0].name).toBe('食料品')
+		})
+
+		test('should get default category list successfully in English', async () => {
+			const mockOAuth = new MockOAuthClient()
+			const mockResponse = {
+				categories: [
+					{
+						id: 101,
+						mode: 'payment',
+						name: 'Food',
+					},
+				],
+				requested: 1669618091,
+			}
+
+			mockOAuth.setMockResponse(
+				'https://api.zaim.net/v2/category?lang=en',
+				mockResponse,
+			)
+
+			const zaim = new Zaim({
+				consumerKey: 'test-key',
+				consumerSecret: 'test-secret',
+				accessToken: 'test-token',
+				accessTokenSecret: 'test-secret',
+				oauthClient: mockOAuth.asOAuth(),
+			})
+
+			// Act
+			const result = await zaim.category.default('en')
+
+			// Assert - Check all fields are properly transformed
+			expect(result[0].id).toBe(101)
+			expect(result[0].mode).toBe('payment')
+			expect(result[0].name).toBe('Food')
+		})
+	})
 })

@@ -108,6 +108,15 @@ const categories = await zaim.category.list();
 console.log(categories[0].name); // 'Food'
 ```
 
+#### `default()`
+
+Get default category list
+
+```typescript
+const categories = await zaim.category.default('en');
+console.log(categories[0].name); // 'Food'
+```
+
 ### Genre
 
 #### `list()`
@@ -141,14 +150,15 @@ console.log(accounts[0].name); // 'Wallet'
 
 ## API Reference
 
-| Endpoint                      | Method | Description                                                            |
-| ----------------------------- | ------ | ---------------------------------------------------------------------- |
-| `zaim.user.verify()`          | GET    | Representation of the requesting user if authentication was successful |
-| `zaim.money.list(params?)`    | GET    | Showing the list of input data                                         |
-| `zaim.category.list()`        | GET    | Showing the list of your categories                                    |
-| `zaim.genre.list()`           | GET    | Showing the list of your genres                                        |
-| `zaim.account.list()`         | GET    | Showing the list of your accounts                                      |
-| `zaim.account.default(lang?)` | GET    | List default accounts                                                  |
+| Endpoint                       | Method | Description                                                            |
+| ------------------------------ | ------ | ---------------------------------------------------------------------- |
+| `zaim.user.verify()`           | GET    | Representation of the requesting user if authentication was successful |
+| `zaim.money.list(params?)`     | GET    | Showing the list of input data                                         |
+| `zaim.category.list()`         | GET    | Showing the list of your categories                                    |
+| `zaim.genre.list()`            | GET    | Showing the list of your genres                                        |
+| `zaim.account.list()`          | GET    | Showing the list of your accounts                                      |
+| `zaim.account.default(lang?)`  | GET    | List default accounts                                                  |
+| `zaim.category.default(lang?)` | GET    | List default categories                                                |
 
 For full details on each endpoint, refer to the [Zaim API documentation](https://dev.zaim.net/home/api).
 

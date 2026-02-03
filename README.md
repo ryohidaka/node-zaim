@@ -157,6 +157,16 @@ const accounts = await zaim.account.default('en');
 console.log(accounts[0].name); // 'Wallet'
 ```
 
+### Currency
+
+#### `list()`
+
+```typescript
+const currencies = await zaim.currency.list();
+console.log(currencies[0].currencyCode); // 'AUD'
+console.log(currencies[0].name); // 'Australian dollar'
+```
+
 ## API Reference
 
 | Endpoint                       | Method | Description                                                            |
@@ -169,6 +179,7 @@ console.log(accounts[0].name); // 'Wallet'
 | `zaim.account.default(lang?)`  | GET    | List default accounts                                                  |
 | `zaim.category.default(lang?)` | GET    | List default categories                                                |
 | `zaim.genre.default(lang?)`    | GET    | List default genres                                                    |
+| `zaim.currency.list()`         | GET    | List available currencies                                              |
 
 For full details on each endpoint, refer to the [Zaim API documentation](https://dev.zaim.net/home/api).
 

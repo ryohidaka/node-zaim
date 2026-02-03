@@ -1,6 +1,7 @@
 export * from './account'
 export * from './category'
 export * from './common'
+export * from './currency'
 export * from './genre'
 export * from './grouped-money'
 export * from './money'

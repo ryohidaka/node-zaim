@@ -95,3 +95,67 @@ export const GenreListResponseSchema: z.ZodObject<{
 	genres: z.array(GenreItemSchema),
 	requested: z.number(),
 })
+
+export const DefaultGenreItemSchema: z.ZodPipe<
+	z.ZodObject<
+		{
+			id: z.ZodNumber
+			category_id: z.ZodNumber
+			name: z.ZodString
+		},
+		z.core.$strip
+	>,
+	z.ZodTransform<
+		{
+			id: number
+			categoryId: number
+			name: string
+		},
+		{
+			id: number
+			category_id: number
+			name: string
+		}
+	>
+> = z
+	.object({
+		id: z.number(),
+		category_id: z.number(),
+		name: z.string(),
+	})
+	.transform((data) => ({
+		id: data.id,
+		categoryId: data.category_id,
+		name: data.name,
+	}))
+
+export const DefaultGenreListResponseSchema: z.ZodObject<{
+	genres: z.ZodArray<
+		z.ZodPipe<
+			z.ZodObject<
+				{
+					id: z.ZodNumber
+					category_id: z.ZodNumber
+					name: z.ZodString
+				},
+				z.core.$strip
+			>,
+			z.ZodTransform<
+				{
+					id: number
+					categoryId: number
+					name: string
+				},
+				{
+					id: number
+					category_id: number
+					name: string
+				}
+			>
+		>
+	>
+	requested: z.ZodNumber
+}> = z.object({
+	genres: z.array(DefaultGenreItemSchema),
+	requested: z.number(),
+})

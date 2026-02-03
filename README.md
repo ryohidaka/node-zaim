@@ -128,6 +128,15 @@ const genres = await zaim.genre.list();
 console.log(genres[0].name); // 'Geocery'
 ```
 
+#### `default()`
+
+Get default genre list
+
+```typescript
+const genres = await zaim.genre.default('en');
+console.log(genres[0].name); // 'Geocery'
+```
+
 ### Account
 
 #### `list()`
@@ -159,6 +168,7 @@ console.log(accounts[0].name); // 'Wallet'
 | `zaim.account.list()`          | GET    | Showing the list of your accounts                                      |
 | `zaim.account.default(lang?)`  | GET    | List default accounts                                                  |
 | `zaim.category.default(lang?)` | GET    | List default categories                                                |
+| `zaim.genre.default(lang?)`    | GET    | List default genres                                                    |
 
 For full details on each endpoint, refer to the [Zaim API documentation](https://dev.zaim.net/home/api).
 

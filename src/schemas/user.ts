@@ -144,3 +144,31 @@ export const VerifyResponseSchema: z.ZodObject<
 	me: ZaimUserSchema,
 	requested: z.number(),
 })
+
+export const UserStatsSchema: z.ZodPipe<
+	z.ZodObject<
+		{
+			input_count: z.ZodNumber
+			data_modified: z.ZodOptional<z.ZodString>
+		},
+		z.core.$strip
+	>,
+	z.ZodTransform<
+		{
+			inputCount: number
+			dataModified: Date | undefined
+		},
+		{
+			input_count: number
+			data_modified?: string | undefined
+		}
+	>
+> = z
+	.object({
+		input_count: z.number(),
+		data_modified: z.string().optional(),
+	})
+	.transform((data) => ({
+		inputCount: data.input_count,
+		dataModified: data.data_modified ? new Date(data.data_modified) : undefined,
+	}))

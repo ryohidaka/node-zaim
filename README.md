@@ -97,6 +97,24 @@ const payments = await zaim.money.list({
 });
 ```
 
+### Payment
+
+#### `create()`
+
+Input payment data
+
+```typescript
+const payment = await zaim.payment.create({
+	categoryId: 101,
+	genreId: 10101,
+	amount: 1,
+	date: '2026-02-04',
+	comment: 'test',
+	name: 'test',
+});
+console.log(payment);
+```
+
 ### Category
 
 #### `list()`
@@ -173,6 +191,7 @@ console.log(currencies[0].name); // 'Australian dollar'
 | ------------------------------ | ------ | ---------------------------------------------------------------------- |
 | `zaim.user.verify()`           | GET    | Representation of the requesting user if authentication was successful |
 | `zaim.money.list(params?)`     | GET    | Showing the list of input data                                         |
+| `zaim.payment.create()`        | POST   | Input payment data                                                     |
 | `zaim.category.list()`         | GET    | Showing the list of your categories                                    |
 | `zaim.genre.list()`            | GET    | Showing the list of your genres                                        |
 | `zaim.account.list()`          | GET    | Showing the list of your accounts                                      |

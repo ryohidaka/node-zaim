@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { MoneyModeSchema } from './common'
+import { UserStatsSchema } from './user'
 
 export const MoneyItemSchema: z.ZodPipe<
 	z.ZodObject<
@@ -239,4 +240,82 @@ export const MoneyQueryParamsSchema: z.ZodObject<{
 		.optional(),
 	/** if you set as `receipt_id`, Zaim makes the response group by the `receipt_id` */
 	groupBy: z.literal('receipt_id').optional(),
+})
+
+export const MoneyResponseSchema: z.ZodPipe<
+	z.ZodObject<
+		{
+			id: z.ZodNumber
+			modified: z.ZodString
+		},
+		z.core.$strip
+	>,
+	z.ZodTransform<
+		{
+			id: number
+			modified: Date
+		},
+		{
+			id: number
+			modified: string
+		}
+	>
+> = z
+	.object({
+		id: z.number(),
+		modified: z.string(),
+	})
+	.transform((data) => ({
+		id: data.id,
+		modified: new Date(data.modified),
+	}))
+
+export const MoneyCreateResponseSchema: z.ZodObject<{
+	stamps: z.ZodNull
+	banners: z.ZodArray<z.ZodUnknown>
+	money: z.ZodPipe<
+		z.ZodObject<
+			{
+				id: z.ZodNumber
+				modified: z.ZodString
+			},
+			z.core.$strip
+		>,
+		z.ZodTransform<
+			{
+				id: number
+				modified: Date
+			},
+			{
+				id: number
+				modified: string
+			}
+		>
+	>
+	user: z.ZodPipe<
+		z.ZodObject<
+			{
+				input_count: z.ZodNumber
+				data_modified: z.ZodOptional<z.ZodString>
+			},
+			z.core.$strip
+		>,
+		z.ZodTransform<
+			{
+				inputCount: number
+				dataModified: Date | undefined
+			},
+			{
+				input_count: number
+				data_modified?: string | undefined
+			}
+		>
+	>
+	requested: z.ZodNumber
+}> = z.object({
+	stamps: z.null(),
+	banners: z.array(z.unknown()),
+	money: MoneyResponseSchema,
+	user: UserStatsSchema,
+	requested: z.number(),
 })

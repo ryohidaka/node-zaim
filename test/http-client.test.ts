@@ -220,4 +220,98 @@ describe('HttpClient', () => {
 			expect(result).toEqual(mockResponse)
 		})
 	})
+
+	describe('post', () => {
+		test('should successfully post data and parse JSON response', async () => {
+			// Arrange
+			const testPath = '/test/create'
+			const requestBody = { name: 'New User', age: 25 }
+			const mockResponse = { id: 1, ...requestBody }
+
+			mockOAuth.post = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					_body: Record<string, string | number | boolean>,
+					_contentType: string,
+					callback: (error: unknown, data?: string) => void,
+				) => {
+					callback(null, JSON.stringify(mockResponse))
+				},
+			) as OAuth['post']
+
+			// Act
+			const result = await httpClient.post(testPath, requestBody)
+
+			// Assert
+			expect(result).toEqual(mockResponse)
+			expect(mockOAuth.post).toHaveBeenCalledTimes(1)
+			expect(mockOAuth.post).toHaveBeenCalledWith(
+				`${BASE_URL}${testPath}`,
+				testAccessToken,
+				testAccessTokenSecret,
+				requestBody,
+				'application/x-www-form-urlencoded',
+				expect.any(Function),
+			)
+		})
+
+		test('should post with empty body when not provided', async () => {
+			// Arrange
+			const testPath = '/test/create'
+			const mockResponse = { success: true }
+
+			mockOAuth.post = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					_body: Record<string, string | number | boolean>,
+					_contentType: string,
+					callback: (error: unknown, data?: string) => void,
+				) => {
+					callback(null, JSON.stringify(mockResponse))
+				},
+			) as OAuth['post']
+
+			// Act
+			const result = await httpClient.post(testPath)
+
+			// Assert
+			expect(result).toEqual(mockResponse)
+			expect(mockOAuth.post).toHaveBeenCalledWith(
+				`${BASE_URL}${testPath}`,
+				testAccessToken,
+				testAccessTokenSecret,
+				{},
+				'application/x-www-form-urlencoded',
+				expect.any(Function),
+			)
+		})
+
+		test('should reject when OAuth returns an error', async () => {
+			// Arrange
+			const testPath = '/test/create'
+			const mockError = { statusCode: 400, data: 'Bad Request' }
+
+			mockOAuth.post = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					_body: Record<string, string | number | boolean>,
+					_contentType: string,
+					callback: (error: unknown, data?: string) => void,
+				) => {
+					callback(mockError, undefined)
+				},
+			) as OAuth['post']
+
+			// Act & Assert
+			await expect(httpClient.post(testPath, { name: 'Test' })).rejects.toEqual(
+				mockError,
+			)
+		})
+	})
 })

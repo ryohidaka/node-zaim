@@ -410,4 +410,96 @@ describe('HttpClient', () => {
 			)
 		})
 	})
+
+	describe('delete', () => {
+		test('should successfully delete data and parse JSON response', async () => {
+			// Arrange
+			const testPath = '/test/delete/1'
+			const mockResponse = { success: true, deleted: 1 }
+
+			mockOAuth.put = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					_body: Record<string, string | number | boolean>,
+					_contentType: string,
+					callback: (error: unknown, data?: string) => void,
+				) => {
+					callback(null, JSON.stringify(mockResponse))
+				},
+			) as OAuth['put']
+
+			// Act
+			const result = await httpClient.delete(testPath)
+
+			// Assert
+			expect(result).toEqual(mockResponse)
+			expect(mockOAuth.put).toHaveBeenCalledTimes(1)
+			expect(mockOAuth.put).toHaveBeenCalledWith(
+				`${BASE_URL}${testPath}`,
+				testAccessToken,
+				testAccessTokenSecret,
+				{},
+				'application/x-www-form-urlencoded',
+				expect.any(Function),
+			)
+		})
+
+		test('should delete with body parameters', async () => {
+			// Arrange
+			const testPath = '/test/delete/1'
+			const requestBody = { reason: 'No longer needed' }
+			const mockResponse = { success: true }
+
+			mockOAuth.put = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					_body: Record<string, string | number | boolean>,
+					_contentType: string,
+					callback: (error: unknown, data?: string) => void,
+				) => {
+					callback(null, JSON.stringify(mockResponse))
+				},
+			) as OAuth['put']
+
+			// Act
+			const result = await httpClient.delete(testPath, requestBody)
+
+			// Assert
+			expect(result).toEqual(mockResponse)
+			expect(mockOAuth.put).toHaveBeenCalledWith(
+				`${BASE_URL}${testPath}`,
+				testAccessToken,
+				testAccessTokenSecret,
+				requestBody,
+				'application/x-www-form-urlencoded',
+				expect.any(Function),
+			)
+		})
+
+		test('should reject when OAuth returns an error', async () => {
+			// Arrange
+			const testPath = '/test/delete/1'
+			const mockError = { statusCode: 403, data: 'Forbidden' }
+
+			mockOAuth.put = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					_body: Record<string, string | number | boolean>,
+					_contentType: string,
+					callback: (error: unknown, data?: string) => void,
+				) => {
+					callback(mockError, undefined)
+				},
+			) as OAuth['put']
+
+			// Act & Assert
+			await expect(httpClient.delete(testPath)).rejects.toEqual(mockError)
+		})
+	})
 })

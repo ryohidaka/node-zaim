@@ -157,6 +157,33 @@ export class MockOAuthClient {
 		}
 	}
 
+	delete(
+		url: string,
+		_accessToken: string,
+		_accessTokenSecret: string,
+		_body: Record<string, string | number | boolean>,
+		_contentType: string,
+		callback: (
+			error: { statusCode: number; data?: string } | null,
+			data: string,
+		) => void,
+	): void {
+		if (this.shouldFail) {
+			callback(this.failureError, '')
+			return
+		}
+
+		const response = this.mockResponses.get(url)
+		if (response) {
+			callback(null, JSON.stringify(response))
+		} else {
+			callback(
+				{ statusCode: 400, data: `No mock response set for URL: ${url}` },
+				'',
+			)
+		}
+	}
+
 	// Helper method to cast to OAuth type
 	asOAuth(): OAuth {
 		return this as unknown as OAuth

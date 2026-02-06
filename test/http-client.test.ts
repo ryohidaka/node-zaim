@@ -13,6 +13,8 @@ describe('HttpClient', () => {
 		// Create a mock OAuth instance
 		mockOAuth = {
 			get: mock(() => {}),
+			post: mock(() => {}),
+			put: mock(() => {}),
 		} as unknown as OAuth
 
 		httpClient = new HttpClient(
@@ -310,6 +312,100 @@ describe('HttpClient', () => {
 
 			// Act & Assert
 			await expect(httpClient.post(testPath, { name: 'Test' })).rejects.toEqual(
+				mockError,
+			)
+		})
+	})
+
+	describe('put', () => {
+		test('should successfully update data and parse JSON response', async () => {
+			// Arrange
+			const testPath = '/test/update/1'
+			const requestBody = { name: 'Updated User', age: 30 }
+			const mockResponse = { id: 1, ...requestBody }
+
+			mockOAuth.put = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					_body: Record<string, string | number | boolean>,
+					_contentType: string,
+					callback: (error: unknown, data?: string) => void,
+				) => {
+					callback(null, JSON.stringify(mockResponse))
+				},
+			) as OAuth['put']
+
+			// Act
+			const result = await httpClient.put(testPath, requestBody)
+
+			// Assert
+			expect(result).toEqual(mockResponse)
+			expect(mockOAuth.put).toHaveBeenCalledTimes(1)
+			expect(mockOAuth.put).toHaveBeenCalledWith(
+				`${BASE_URL}${testPath}`,
+				testAccessToken,
+				testAccessTokenSecret,
+				requestBody,
+				'application/x-www-form-urlencoded',
+				expect.any(Function),
+			)
+		})
+
+		test('should put with empty body when not provided', async () => {
+			// Arrange
+			const testPath = '/test/update/1'
+			const mockResponse = { success: true }
+
+			mockOAuth.put = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					_body: Record<string, string | number | boolean>,
+					_contentType: string,
+					callback: (error: unknown, data?: string) => void,
+				) => {
+					callback(null, JSON.stringify(mockResponse))
+				},
+			) as OAuth['put']
+
+			// Act
+			const result = await httpClient.put(testPath)
+
+			// Assert
+			expect(result).toEqual(mockResponse)
+			expect(mockOAuth.put).toHaveBeenCalledWith(
+				`${BASE_URL}${testPath}`,
+				testAccessToken,
+				testAccessTokenSecret,
+				{},
+				'application/x-www-form-urlencoded',
+				expect.any(Function),
+			)
+		})
+
+		test('should reject when OAuth returns an error', async () => {
+			// Arrange
+			const testPath = '/test/update/1'
+			const mockError = { statusCode: 404, data: 'Not Found' }
+
+			mockOAuth.put = mock(
+				(
+					_url: string,
+					_token: string,
+					_secret: string,
+					_body: Record<string, string | number | boolean>,
+					_contentType: string,
+					callback: (error: unknown, data?: string) => void,
+				) => {
+					callback(mockError, undefined)
+				},
+			) as OAuth['put']
+
+			// Act & Assert
+			await expect(httpClient.put(testPath, { name: 'Test' })).rejects.toEqual(
 				mockError,
 			)
 		})

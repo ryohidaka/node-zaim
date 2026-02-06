@@ -63,4 +63,20 @@ export class HttpClient {
 			),
 		)
 	}
+
+	async put<T extends Record<string, unknown>>(
+		path: string,
+		body: Record<string, string | number | boolean> = {},
+	): Promise<T> {
+		return this.execute<T>((cb) =>
+			this.oauth.put(
+				`${BASE_URL}${path}`,
+				this.accessToken,
+				this.accessTokenSecret,
+				body,
+				'application/x-www-form-urlencoded',
+				cb,
+			),
+		)
+	}
 }

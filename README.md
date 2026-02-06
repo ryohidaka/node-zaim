@@ -111,6 +111,7 @@ const payment = await zaim.payment.create({
 	date: '2026-02-04',
 	comment: 'test',
 	name: 'test',
+	place: 'test'
 });
 console.log(payment);
 ```

@@ -8,6 +8,7 @@ export const CreatePaymentParamsSchema: z.ZodObject<{
 	fromAccountId: z.ZodOptional<z.ZodNumber>
 	comment: z.ZodOptional<z.ZodString>
 	name: z.ZodOptional<z.ZodString>
+	place: z.ZodOptional<z.ZodString>
 }> = z.object({
 	categoryId: z.number().positive('categoryId must be a positive number'),
 	genreId: z.number().positive('genreId must be a positive number'),
@@ -50,4 +51,5 @@ export const CreatePaymentParamsSchema: z.ZodObject<{
 		.max(100, 'comment must not exceed 100 characters')
 		.optional(),
 	name: z.string().max(100, 'name must not exceed 100 characters').optional(),
+	place: z.string().max(100, 'place must not exceed 100 characters').optional(),
 })

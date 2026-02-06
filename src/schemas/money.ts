@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { MoneyModeSchema } from './common'
+import { PlaceSchema } from './place'
 import { UserStatsSchema } from './user'
 
 export const MoneyItemSchema: z.ZodPipe<
@@ -292,6 +293,82 @@ export const MoneyCreateResponseSchema: z.ZodObject<{
 			}
 		>
 	>
+	place: z.ZodOptional<
+		z.ZodPipe<
+			z.ZodObject<
+				{
+					id: z.ZodNumber
+					user_id: z.ZodNumber
+					genre_id: z.ZodNumber
+					category_id: z.ZodNumber
+					account_id: z.ZodNumber
+					mode: z.ZodEnum<{
+						income: 'income'
+						payment: 'payment'
+						transfer: 'transfer'
+					}>
+					place_uid: z.ZodString
+					service: z.ZodString
+					name: z.ZodString
+					original_name: z.ZodString
+					tel: z.ZodOptional<z.ZodString>
+					count: z.ZodNumber
+					calc_flag: z.ZodNumber
+					place_pattern_id: z.ZodNumber
+					transfer_account_id: z.ZodNumber
+					edit_flag: z.ZodNumber
+					active: z.ZodNumber
+					modified: z.ZodOptional<z.ZodString>
+					created: z.ZodString
+				},
+				z.core.$strip
+			>,
+			z.ZodTransform<
+				{
+					id: number
+					userId: number
+					genreId: number
+					categoryId: number
+					accountId: number | null
+					mode: 'income' | 'payment' | 'transfer'
+					placeUid: string
+					service: string
+					name: string
+					originalName: string
+					tel: string | null | undefined
+					count: number
+					calcFlag: number
+					placePatternId: number | null
+					transferAccountId: number | null
+					editFlag: boolean
+					active: boolean
+					modified: Date | undefined
+					created: Date
+				},
+				{
+					id: number
+					user_id: number
+					genre_id: number
+					category_id: number
+					account_id: number
+					mode: 'income' | 'payment' | 'transfer'
+					place_uid: string
+					service: string
+					name: string
+					original_name: string
+					count: number
+					calc_flag: number
+					place_pattern_id: number
+					transfer_account_id: number
+					edit_flag: number
+					active: number
+					created: string
+					tel?: string | undefined
+					modified?: string | undefined
+				}
+			>
+		>
+	>
 	user: z.ZodPipe<
 		z.ZodObject<
 			{
@@ -316,6 +393,7 @@ export const MoneyCreateResponseSchema: z.ZodObject<{
 	stamps: z.null(),
 	banners: z.array(z.unknown()),
 	money: MoneyResponseSchema,
+	place: PlaceSchema.optional(),
 	user: UserStatsSchema,
 	requested: z.number(),
 })

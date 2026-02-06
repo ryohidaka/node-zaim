@@ -29,8 +29,16 @@ export class PaymentApi {
 	 * ```
 	 */
 	async create(params: CreatePaymentParams): Promise<PaymentCreateResponse> {
-		const { categoryId, genreId, amount, date, fromAccountId, comment, name } =
-			CreatePaymentParamsSchema.parse(params)
+		const {
+			categoryId,
+			genreId,
+			amount,
+			date,
+			fromAccountId,
+			comment,
+			name,
+			place,
+		} = CreatePaymentParamsSchema.parse(params)
 
 		const body: Record<string, string | number> = {
 			mapping: 1,
@@ -43,6 +51,7 @@ export class PaymentApi {
 		if (fromAccountId !== undefined) body.from_account_id = fromAccountId
 		if (comment) body.comment = comment
 		if (name) body.name = name
+		if (place) body.place = place
 
 		const response = await this.client
 			.getHttpClient()

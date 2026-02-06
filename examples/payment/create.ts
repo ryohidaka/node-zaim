@@ -15,6 +15,7 @@ const params: CreatePaymentParams = {
 	fromAccountId: 1,
 	comment: 'test',
 	name: 'test',
+	place: 'test',
 }
 
 const payment = await zaim.payment.create(params)

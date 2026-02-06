@@ -397,3 +397,126 @@ export const MoneyCreateResponseSchema: z.ZodObject<{
 	user: UserStatsSchema,
 	requested: z.number(),
 })
+
+export const MoneyUpdateResponseSchema: z.ZodObject<{
+	money: z.ZodPipe<
+		z.ZodObject<
+			{
+				id: z.ZodNumber
+				modified: z.ZodString
+			},
+			z.core.$strip
+		>,
+		z.ZodTransform<
+			{
+				id: number
+				modified: Date
+			},
+			{
+				id: number
+				modified: string
+			}
+		>
+	>
+	place: z.ZodOptional<
+		z.ZodPipe<
+			z.ZodObject<
+				{
+					id: z.ZodNumber
+					user_id: z.ZodNumber
+					genre_id: z.ZodNumber
+					category_id: z.ZodNumber
+					account_id: z.ZodNumber
+					mode: z.ZodEnum<{
+						income: 'income'
+						payment: 'payment'
+						transfer: 'transfer'
+					}>
+					place_uid: z.ZodString
+					service: z.ZodString
+					name: z.ZodString
+					original_name: z.ZodString
+					tel: z.ZodOptional<z.ZodString>
+					count: z.ZodNumber
+					calc_flag: z.ZodNumber
+					place_pattern_id: z.ZodNumber
+					transfer_account_id: z.ZodNumber
+					edit_flag: z.ZodNumber
+					active: z.ZodNumber
+					modified: z.ZodOptional<z.ZodString>
+					created: z.ZodString
+				},
+				z.core.$strip
+			>,
+			z.ZodTransform<
+				{
+					id: number
+					userId: number
+					genreId: number
+					categoryId: number
+					accountId: number | null
+					mode: 'income' | 'payment' | 'transfer'
+					placeUid: string
+					service: string
+					name: string
+					originalName: string
+					tel: string | null | undefined
+					count: number
+					calcFlag: number
+					placePatternId: number | null
+					transferAccountId: number | null
+					editFlag: boolean
+					active: boolean
+					modified: Date | undefined
+					created: Date
+				},
+				{
+					id: number
+					user_id: number
+					genre_id: number
+					category_id: number
+					account_id: number
+					mode: 'income' | 'payment' | 'transfer'
+					place_uid: string
+					service: string
+					name: string
+					original_name: string
+					count: number
+					calc_flag: number
+					place_pattern_id: number
+					transfer_account_id: number
+					edit_flag: number
+					active: number
+					created: string
+					tel?: string | undefined
+					modified?: string | undefined
+				}
+			>
+		>
+	>
+	user: z.ZodPipe<
+		z.ZodObject<
+			{
+				input_count: z.ZodNumber
+				data_modified: z.ZodOptional<z.ZodString>
+			},
+			z.core.$strip
+		>,
+		z.ZodTransform<
+			{
+				inputCount: number
+				dataModified: Date | undefined
+			},
+			{
+				input_count: number
+				data_modified?: string | undefined
+			}
+		>
+	>
+	requested: z.ZodNumber
+}> = z.object({
+	money: MoneyResponseSchema,
+	place: PlaceSchema.optional(),
+	user: UserStatsSchema,
+	requested: z.number(),
+})

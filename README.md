@@ -116,6 +116,21 @@ const payment = await zaim.payment.create({
 console.log(payment);
 ```
 
+#### `update()`
+
+Update payment data
+
+```typescript
+const payment = await zaim.payment.update({
+	amount: 1,
+	date: '2026-02-04',
+	genreId: 10101,
+	categoryId: 101,
+	comment: 'test',
+});
+console.log(payment);
+```
+
 ### Category
 
 #### `list()`
@@ -188,18 +203,19 @@ console.log(currencies[0].name); // 'Australian dollar'
 
 ## API Reference
 
-| Endpoint                       | Method | Description                                                            |
-| ------------------------------ | ------ | ---------------------------------------------------------------------- |
-| `zaim.user.verify()`           | GET    | Representation of the requesting user if authentication was successful |
-| `zaim.money.list(params?)`     | GET    | Showing the list of input data                                         |
-| `zaim.payment.create()`        | POST   | Input payment data                                                     |
-| `zaim.category.list()`         | GET    | Showing the list of your categories                                    |
-| `zaim.genre.list()`            | GET    | Showing the list of your genres                                        |
-| `zaim.account.list()`          | GET    | Showing the list of your accounts                                      |
-| `zaim.account.default(lang?)`  | GET    | List default accounts                                                  |
-| `zaim.category.default(lang?)` | GET    | List default categories                                                |
-| `zaim.genre.default(lang?)`    | GET    | List default genres                                                    |
-| `zaim.currency.list()`         | GET    | List available currencies                                              |
+| Endpoint                          | Method | Description                                                            |
+| --------------------------------- | ------ | ---------------------------------------------------------------------- |
+| `zaim.user.verify()`              | GET    | Representation of the requesting user if authentication was successful |
+| `zaim.money.list(params?)`        | GET    | Showing the list of input data                                         |
+| `zaim.payment.create(params)`     | POST   | Input payment data                                                     |
+| `zaim.payment.update(id, params)` | PUT    | Update payment data                                                    |
+| `zaim.category.list()`            | GET    | Showing the list of your categories                                    |
+| `zaim.genre.list()`               | GET    | Showing the list of your genres                                        |
+| `zaim.account.list()`             | GET    | Showing the list of your accounts                                      |
+| `zaim.account.default(lang?)`     | GET    | List default accounts                                                  |
+| `zaim.category.default(lang?)`    | GET    | List default categories                                                |
+| `zaim.genre.default(lang?)`       | GET    | List default genres                                                    |
+| `zaim.currency.list()`            | GET    | List available currencies                                              |
 
 For full details on each endpoint, refer to the [Zaim API documentation](https://dev.zaim.net/home/api).
 

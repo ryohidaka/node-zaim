@@ -520,3 +520,49 @@ export const MoneyUpdateResponseSchema: z.ZodObject<{
 	user: UserStatsSchema,
 	requested: z.number(),
 })
+
+export const MoneyDeleteResponseSchema: z.ZodObject<{
+	money: z.ZodPipe<
+		z.ZodObject<
+			{
+				id: z.ZodNumber
+				modified: z.ZodString
+			},
+			z.core.$strip
+		>,
+		z.ZodTransform<
+			{
+				id: number
+				modified: Date
+			},
+			{
+				id: number
+				modified: string
+			}
+		>
+	>
+	user: z.ZodPipe<
+		z.ZodObject<
+			{
+				input_count: z.ZodNumber
+				data_modified: z.ZodOptional<z.ZodString>
+			},
+			z.core.$strip
+		>,
+		z.ZodTransform<
+			{
+				inputCount: number
+				dataModified: Date | undefined
+			},
+			{
+				input_count: number
+				data_modified?: string | undefined
+			}
+		>
+	>
+	requested: z.ZodNumber
+}> = z.object({
+	money: MoneyResponseSchema,
+	user: UserStatsSchema,
+	requested: z.number(),
+})

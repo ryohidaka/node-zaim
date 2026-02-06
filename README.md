@@ -111,7 +111,7 @@ const payment = await zaim.payment.create({
 	date: '2026-02-04',
 	comment: 'test',
 	name: 'test',
-	place: 'test'
+	place: 'test',
 });
 console.log(payment);
 ```
@@ -128,6 +128,15 @@ const payment = await zaim.payment.update({
 	categoryId: 101,
 	comment: 'test',
 });
+console.log(payment);
+```
+
+#### `delete()`
+
+Delete payment data
+
+```typescript
+const payment = await zaim.payment.delete(11820767);
 console.log(payment);
 ```
 
@@ -209,6 +218,7 @@ console.log(currencies[0].name); // 'Australian dollar'
 | `zaim.money.list(params?)`        | GET    | Showing the list of input data                                         |
 | `zaim.payment.create(params)`     | POST   | Input payment data                                                     |
 | `zaim.payment.update(id, params)` | PUT    | Update payment data                                                    |
+| `zaim.payment.delete(id)`         | DELETE | Delete payment data                                                    |
 | `zaim.category.list()`            | GET    | Showing the list of your categories                                    |
 | `zaim.genre.list()`               | GET    | Showing the list of your genres                                        |
 | `zaim.account.list()`             | GET    | Showing the list of your accounts                                      |

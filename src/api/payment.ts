@@ -3,6 +3,7 @@ import type { Zaim } from '@/client'
 import {
 	CreatePaymentParamsSchema,
 	MoneyCreateResponseSchema,
+	MoneyDeleteResponseSchema,
 	MoneyUpdateResponseSchema,
 	UpdatePaymentParamsSchema,
 } from '@/schemas'
@@ -10,6 +11,7 @@ import type { CreatePaymentParams, UpdatePaymentParams } from '@/types'
 
 type PaymentCreateResponse = z.infer<typeof MoneyCreateResponseSchema>
 type PaymentUpdateResponse = z.infer<typeof MoneyUpdateResponseSchema>
+type PaymentDeleteResponse = z.infer<typeof MoneyDeleteResponseSchema>
 
 export class PaymentApi {
 	constructor(private client: Zaim) {}
@@ -106,5 +108,27 @@ export class PaymentApi {
 			.getHttpClient()
 			.put(`/v2/home/money/payment/${id}`, body)
 		return MoneyUpdateResponseSchema.parse(response)
+	}
+
+	/**
+	 * Delete payment data
+	 *
+	 * @see https://dev.zaim.net/home/api#money_delete
+	 *
+	 * @param id - Payment record ID to delete
+	 * @returns Payment deletion response
+	 * @throws {Error} If the request fails
+	 *
+	 * @example
+	 * ```typescript
+	 * const result = await zaim.payment.delete(11820767);
+	 * console.log(result.money.id); // 11820767
+	 * ```
+	 */
+	async delete(id: number): Promise<PaymentDeleteResponse> {
+		const response = await this.client
+			.getHttpClient()
+			.delete(`/v2/home/money/payment/${id}`)
+		return MoneyDeleteResponseSchema.parse(response)
 	}
 }

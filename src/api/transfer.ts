@@ -3,6 +3,7 @@ import type { Zaim } from '@/client'
 import {
 	CreateTransferParamsSchema,
 	MoneyCreateResponseSchema,
+	MoneyDeleteResponseSchema,
 	MoneyUpdateResponseSchema,
 	UpdateTransferParamsSchema,
 } from '@/schemas'
@@ -10,6 +11,7 @@ import type { CreateTransferParams, UpdateTransferParams } from '@/types'
 
 type TransferCreateResponse = z.infer<typeof MoneyCreateResponseSchema>
 type TransferUpdateResponse = z.infer<typeof MoneyUpdateResponseSchema>
+type TransferDeleteResponse = z.infer<typeof MoneyDeleteResponseSchema>
 
 export class TransferApi {
 	constructor(private client: Zaim) {}
@@ -87,5 +89,25 @@ export class TransferApi {
 			.getHttpClient()
 			.put(`/v2/home/money/transfer/${id}`, body)
 		return MoneyUpdateResponseSchema.parse(response)
+	}
+
+	/**
+	 * Delete a transfer record
+	 *
+	 * @param id - Transfer record ID to delete
+	 * @returns Transfer deletion response
+	 * @throws {Error} If the request fails
+	 *
+	 * @example
+	 * ```typescript
+	 * const result = await zaim.transfer.delete(11820767);
+	 * console.log(result.money.id); // 11820767
+	 * ```
+	 */
+	async delete(id: number): Promise<TransferDeleteResponse> {
+		const response = await this.client
+			.getHttpClient()
+			.delete(`/v2/home/money/transfer/${id}`)
+		return MoneyDeleteResponseSchema.parse(response)
 	}
 }

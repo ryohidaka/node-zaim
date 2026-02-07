@@ -211,6 +211,15 @@ const transfer = await zaim.transfer.update({
 console.log(transfer);
 ```
 
+#### `delete()`
+
+Delete transfer data
+
+```typescript
+const transfer = await zaim.transfer.delete(11820767);
+console.log(transfer);
+```
+
 ### Category
 
 #### `list()`
@@ -295,6 +304,7 @@ console.log(currencies[0].name); // 'Australian dollar'
 | `zaim.income.delete(id)`           | DELETE | Delete income data                                                     |
 | `zaim.transfer.create(params)`     | POST   | Input transfer data                                                    |
 | `zaim.transfer.update(id, params)` | PUT    | Update transfer data                                                   |
+| `zaim.transfer.delete(id)`         | DELETE | Delete transfer data                                                   |
 | `zaim.category.list()`             | GET    | Showing the list of your categories                                    |
 | `zaim.genre.list()`                | GET    | Showing the list of your genres                                        |
 | `zaim.account.list()`              | GET    | Showing the list of your accounts                                      |

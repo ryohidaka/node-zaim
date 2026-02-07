@@ -7,6 +7,7 @@ import {
 	IncomeApi,
 	MoneyApi,
 	PaymentApi,
+	TransferApi,
 	UserApi,
 } from './api'
 import { ZaimAuth } from './auth'
@@ -61,6 +62,7 @@ export class Zaim {
 	public readonly currency: CurrencyApi
 	public readonly payment: PaymentApi
 	public readonly income: IncomeApi
+	public readonly transfer: TransferApi
 
 	constructor(config: ZaimConfig) {
 		this.auth = new ZaimAuth(
@@ -85,6 +87,7 @@ export class Zaim {
 		this.currency = new CurrencyApi(this)
 		this.payment = new PaymentApi(this)
 		this.income = new IncomeApi(this)
+		this.transfer = new TransferApi(this)
 	}
 
 	/**

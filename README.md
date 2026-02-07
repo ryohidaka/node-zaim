@@ -181,6 +181,23 @@ const income = await zaim.income.delete(11820767);
 console.log(income);
 ```
 
+### Transfer
+
+#### `create()`
+
+Input transfer data
+
+```typescript
+const transfer = await zaim.transfer.create({
+	amount: 1,
+	date: '2026-02-04',
+	fromAccountId: 1,
+	toAccountId: 1
+	comment: 'test',
+});
+console.log(transfer);
+```
+
 ### Category
 
 #### `list()`
@@ -263,6 +280,7 @@ console.log(currencies[0].name); // 'Australian dollar'
 | `zaim.income.create(params)`      | POST   | Input income data                                                      |
 | `zaim.income.update(id, params)`  | PUT    | Update income data                                                     |
 | `zaim.income.delete(id)`          | DELETE | Delete income data                                                     |
+| `zaim.transfer.create(params)`    | POST   | Input transfer data                                                    |
 | `zaim.category.list()`            | GET    | Showing the list of your categories                                    |
 | `zaim.genre.list()`               | GET    | Showing the list of your genres                                        |
 | `zaim.account.list()`             | GET    | Showing the list of your accounts                                      |

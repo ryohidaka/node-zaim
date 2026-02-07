@@ -6,6 +6,7 @@ import type {
 	MoneyQueryParamsSchema,
 	UpdateIncomeParamsSchema,
 	UpdatePaymentParamsSchema,
+	UpdateTransferParamsSchema,
 } from '@/schemas'
 
 export type MoneyQueryParams = z.infer<typeof MoneyQueryParamsSchema>
@@ -14,3 +15,4 @@ export type UpdatePaymentParams = z.infer<typeof UpdatePaymentParamsSchema>
 export type CreateIncomeParams = z.infer<typeof CreateIncomeParamsSchema>
 export type UpdateIncomeParams = z.infer<typeof UpdateIncomeParamsSchema>
 export type CreateTransferParams = z.infer<typeof CreateTransferParamsSchema>
+export type UpdateTransferParams = z.infer<typeof UpdateTransferParamsSchema>

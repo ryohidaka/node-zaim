@@ -198,6 +198,19 @@ const transfer = await zaim.transfer.create({
 console.log(transfer);
 ```
 
+#### `update()`
+
+Update transfer data
+
+```typescript
+const transfer = await zaim.transfer.update({
+	amount: 1,
+	date: '2026-02-04',
+	comment: 'test',
+});
+console.log(transfer);
+```
+
 ### Category
 
 #### `list()`
@@ -270,24 +283,25 @@ console.log(currencies[0].name); // 'Australian dollar'
 
 ## API Reference
 
-| Endpoint                          | Method | Description                                                            |
-| --------------------------------- | ------ | ---------------------------------------------------------------------- |
-| `zaim.user.verify()`              | GET    | Representation of the requesting user if authentication was successful |
-| `zaim.money.list(params?)`        | GET    | Showing the list of input data                                         |
-| `zaim.payment.create(params)`     | POST   | Input payment data                                                     |
-| `zaim.payment.update(id, params)` | PUT    | Update payment data                                                    |
-| `zaim.payment.delete(id)`         | DELETE | Delete payment data                                                    |
-| `zaim.income.create(params)`      | POST   | Input income data                                                      |
-| `zaim.income.update(id, params)`  | PUT    | Update income data                                                     |
-| `zaim.income.delete(id)`          | DELETE | Delete income data                                                     |
-| `zaim.transfer.create(params)`    | POST   | Input transfer data                                                    |
-| `zaim.category.list()`            | GET    | Showing the list of your categories                                    |
-| `zaim.genre.list()`               | GET    | Showing the list of your genres                                        |
-| `zaim.account.list()`             | GET    | Showing the list of your accounts                                      |
-| `zaim.account.default(lang?)`     | GET    | List default accounts                                                  |
-| `zaim.category.default(lang?)`    | GET    | List default categories                                                |
-| `zaim.genre.default(lang?)`       | GET    | List default genres                                                    |
-| `zaim.currency.list()`            | GET    | List available currencies                                              |
+| Endpoint                           | Method | Description                                                            |
+| ---------------------------------- | ------ | ---------------------------------------------------------------------- |
+| `zaim.user.verify()`               | GET    | Representation of the requesting user if authentication was successful |
+| `zaim.money.list(params?)`         | GET    | Showing the list of input data                                         |
+| `zaim.payment.create(params)`      | POST   | Input payment data                                                     |
+| `zaim.payment.update(id, params)`  | PUT    | Update payment data                                                    |
+| `zaim.payment.delete(id)`          | DELETE | Delete payment data                                                    |
+| `zaim.income.create(params)`       | POST   | Input income data                                                      |
+| `zaim.income.update(id, params)`   | PUT    | Update income data                                                     |
+| `zaim.income.delete(id)`           | DELETE | Delete income data                                                     |
+| `zaim.transfer.create(params)`     | POST   | Input transfer data                                                    |
+| `zaim.transfer.update(id, params)` | PUT    | Update transfer data                                                   |
+| `zaim.category.list()`             | GET    | Showing the list of your categories                                    |
+| `zaim.genre.list()`                | GET    | Showing the list of your genres                                        |
+| `zaim.account.list()`              | GET    | Showing the list of your accounts                                      |
+| `zaim.account.default(lang?)`      | GET    | List default accounts                                                  |
+| `zaim.category.default(lang?)`     | GET    | List default categories                                                |
+| `zaim.genre.default(lang?)`        | GET    | List default genres                                                    |
+| `zaim.currency.list()`             | GET    | List available currencies                                              |
 
 For full details on each endpoint, refer to the [Zaim API documentation](https://dev.zaim.net/home/api).
 

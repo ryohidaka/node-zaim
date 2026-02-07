@@ -44,3 +44,44 @@ export const CreateTransferParamsSchema: z.ZodObject<{
 		.max(100, 'comment must not exceed 100 characters')
 		.optional(),
 })
+
+export const UpdateTransferParamsSchema: z.ZodObject<{
+	amount: z.ZodNumber
+	date: z.ZodString
+	comment: z.ZodOptional<z.ZodString>
+}> = z.object({
+	amount: z.number().positive('amount must be a positive number'),
+	date: z
+		.string()
+		.refine(
+			(dateStr) => {
+				const date = new Date(dateStr)
+				return !Number.isNaN(date.getTime())
+			},
+			{ message: 'invalid date format' },
+		)
+		.refine(
+			(dateStr) => {
+				const date = new Date(dateStr)
+				const now = new Date()
+				const fiveYearsAgo = new Date(now)
+				fiveYearsAgo.setFullYear(now.getFullYear() - 5)
+				return date >= fiveYearsAgo
+			},
+			{ message: 'date must not be more than 5 years in the past' },
+		)
+		.refine(
+			(dateStr) => {
+				const date = new Date(dateStr)
+				const now = new Date()
+				const fiveYearsLater = new Date(now)
+				fiveYearsLater.setFullYear(now.getFullYear() + 5)
+				return date <= fiveYearsLater
+			},
+			{ message: 'date must not be more than 5 years in the future' },
+		),
+	comment: z
+		.string()
+		.max(100, 'comment must not exceed 100 characters')
+		.optional(),
+})

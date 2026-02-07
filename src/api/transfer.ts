@@ -3,10 +3,13 @@ import type { Zaim } from '@/client'
 import {
 	CreateTransferParamsSchema,
 	MoneyCreateResponseSchema,
+	MoneyUpdateResponseSchema,
+	UpdateTransferParamsSchema,
 } from '@/schemas'
-import type { CreateTransferParams } from '@/types'
+import type { CreateTransferParams, UpdateTransferParams } from '@/types'
 
 type TransferCreateResponse = z.infer<typeof MoneyCreateResponseSchema>
+type TransferUpdateResponse = z.infer<typeof MoneyUpdateResponseSchema>
 
 export class TransferApi {
 	constructor(private client: Zaim) {}
@@ -47,5 +50,42 @@ export class TransferApi {
 			.getHttpClient()
 			.post('/v2/home/money/transfer', body)
 		return MoneyCreateResponseSchema.parse(response)
+	}
+
+	/**
+	 * Update transfer data
+	 *
+	 * @param id - Transfer record ID
+	 * @param params - Transfer update parameters
+	 * @returns Transfer update response including modification timestamp
+	 * @throws {ZodError} If validation fails
+	 *
+	 * @example
+	 * ```typescript
+	 * const result = await zaim.transfer.update(11820767, {
+	 *   amount: 60000,
+	 *   date: '2025-07-09'
+	 * });
+	 * console.log(result.money.modified); // Updated timestamp
+	 * ```
+	 */
+	async update(
+		id: number,
+		params: UpdateTransferParams,
+	): Promise<TransferUpdateResponse> {
+		const { amount, date, comment } = UpdateTransferParamsSchema.parse(params)
+
+		const body: Record<string, string | number> = {
+			mapping: 1,
+			amount: amount,
+			date: date,
+		}
+
+		if (comment) body.comment = comment
+
+		const response = await this.client
+			.getHttpClient()
+			.put(`/v2/home/money/transfer/${id}`, body)
+		return MoneyUpdateResponseSchema.parse(response)
 	}
 }

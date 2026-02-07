@@ -3,6 +3,7 @@ import type { Zaim } from '@/client'
 import {
 	CreateIncomeParamsSchema,
 	MoneyCreateResponseSchema,
+	MoneyDeleteResponseSchema,
 	MoneyUpdateResponseSchema,
 	UpdateIncomeParamsSchema,
 } from '@/schemas'
@@ -10,6 +11,7 @@ import type { CreateIncomeParams, UpdateIncomeParams } from '@/types'
 
 type IncomeCreateResponse = z.infer<typeof MoneyCreateResponseSchema>
 type IncomeUpdateResponse = z.infer<typeof MoneyUpdateResponseSchema>
+type IncomeDeleteResponse = z.infer<typeof MoneyDeleteResponseSchema>
 
 export class IncomeApi {
 	constructor(private client: Zaim) {}
@@ -94,5 +96,27 @@ export class IncomeApi {
 			.getHttpClient()
 			.put(`/v2/home/money/income/${id}`, body)
 		return MoneyUpdateResponseSchema.parse(response)
+	}
+
+	/**
+	 * Delete income data
+	 *
+	 * @see https://dev.zaim.net/home/api#money_delete
+	 *
+	 * @param id - Income record ID to delete
+	 * @returns Income deletion response
+	 * @throws {Error} If the request fails
+	 *
+	 * @example
+	 * ```typescript
+	 * const result = await zaim.income.delete(11820767);
+	 * console.log(result.money.id); // 11820767
+	 * ```
+	 */
+	async delete(id: number): Promise<IncomeDeleteResponse> {
+		const response = await this.client
+			.getHttpClient()
+			.delete(`/v2/home/money/income/${id}`)
+		return MoneyDeleteResponseSchema.parse(response)
 	}
 }

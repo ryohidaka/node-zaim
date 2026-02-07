@@ -1,5 +1,6 @@
 import type z from 'zod'
 import type {
+	CreateIncomeParamsSchema,
 	CreatePaymentParamsSchema,
 	MoneyQueryParamsSchema,
 	UpdatePaymentParamsSchema,
@@ -8,3 +9,4 @@ import type {
 export type MoneyQueryParams = z.infer<typeof MoneyQueryParamsSchema>
 export type CreatePaymentParams = z.infer<typeof CreatePaymentParamsSchema>
 export type UpdatePaymentParams = z.infer<typeof UpdatePaymentParamsSchema>
+export type CreateIncomeParams = z.infer<typeof CreateIncomeParamsSchema>

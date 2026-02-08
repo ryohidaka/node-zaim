@@ -1,11 +1,16 @@
 # node-zaim
 
+[![NPM Version](https://img.shields.io/npm/v/node-zaim?logo=npm)](https://www.npmjs.com/package/node-zaim)
+[![Built with Bun](https://img.shields.io/badge/Built_with-Bun-fbf0df?logo=bun&labelColor=212121)](https://bun.com)
+[![CI](https://github.com/ryohidaka/node-zaim/actions/workflows/ci.yml/badge.svg)](https://github.com/ryohidaka/node-zaim/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 Node.js client library for Zaim API
 
 ## Installation
 
 ```bash
-bun add node-zaim
+npm i node-zaim
 ```
 
 ## Usage

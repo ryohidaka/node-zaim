@@ -47,6 +47,7 @@ export class MoneyApi {
 	 * });
 	 * ```
 	 */
+	async list(): Promise<MoneyListResponse['money']>
 	async list(
 		params: Omit<MoneyQueryParams, 'group_by'> & { group_by: 'receipt_id' },
 	): Promise<GroupedMoneyListResponse['money']>

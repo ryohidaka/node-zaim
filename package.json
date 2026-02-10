@@ -1,6 +1,6 @@
 {
 	"name": "node-zaim",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Node.js client library for Zaim API",
 	"homepage": "https://github.com/ryohidaka/node-zaim#readme",
 	"bugs": {

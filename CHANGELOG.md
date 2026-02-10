@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1](https://github.com/ryohidaka/node-zaim/compare/v0.1.0...v0.1.1) (2026-02-10)
+
+
+### Bug Fixes
+
+* allow list() to be called without parameters ([2905bd0](https://github.com/ryohidaka/node-zaim/commit/2905bd0bbbe92238ec939c1f33eea5bd10930280))
+* resolve type mismatch between `groupBy` and `group_by` ([cff7d28](https://github.com/ryohidaka/node-zaim/commit/cff7d283add50f77f2d905da8437ec5fb10ed610))
+
 ## 0.1.0 (2026-02-08)
 
 

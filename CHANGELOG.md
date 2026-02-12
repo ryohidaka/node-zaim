@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.0](https://github.com/ryohidaka/node-zaim/compare/v0.1.1...v0.2.0) (2026-02-12)
+
+
+### Features
+
+* allow updating `placeUid` in income.update(). ([8a6c229](https://github.com/ryohidaka/node-zaim/commit/8a6c229998a77e48d42bfe68542593ed2d07d627))
+* allow updating `placeUid` in payment.update(). ([40e6529](https://github.com/ryohidaka/node-zaim/commit/40e65293d83a38f57a8ecd2d470b89fd8a04cc2b))
+
 ## [0.1.1](https://github.com/ryohidaka/node-zaim/compare/v0.1.0...v0.1.1) (2026-02-10)
 
 

@@ -172,7 +172,7 @@ const income = await zaim.income.update({
 	categoryId: 101,
 	amount: 1,
 	date: '2026-02-04',
-	place: 'test'
+	placeUid: 'zm-12345'
 	comment: 'test',
 });
 console.log(income);

@@ -1,4 +1,4 @@
-import { type CreateIncomeParams, Zaim } from '../../src'
+import { type UpdateIncomeParams, Zaim } from '../../src'
 
 const zaim = new Zaim({
 	consumerKey: String(process.env.CONSUMER_KEY),
@@ -7,12 +7,12 @@ const zaim = new Zaim({
 	accessTokenSecret: String(process.env.ACCESS_TOKEN_SECRET),
 })
 
-const params: CreateIncomeParams = {
+const params: UpdateIncomeParams = {
 	categoryId: 101,
 	amount: 1,
 	date: '2026-02-04',
 	toAccountId: 1,
-	place: 'test',
+	placeUid: 'test',
 	comment: 'test',
 }
 

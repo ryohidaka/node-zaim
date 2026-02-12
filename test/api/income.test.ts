@@ -40,6 +40,7 @@ describe('IncomeApi', () => {
 				amount: 1,
 				date: '2025-07-08',
 				toAccountId: 1,
+				placeUid: 'zm-test',
 				comment: 'test',
 			}
 

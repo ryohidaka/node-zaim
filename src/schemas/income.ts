@@ -55,6 +55,7 @@ export const UpdateIncomeParamsSchema: z.ZodObject<{
 	date: z.ZodString
 	toAccountId: z.ZodOptional<z.ZodNumber>
 	categoryId: z.ZodOptional<z.ZodNumber>
+	placeUid: z.ZodOptional<z.ZodString>
 	comment: z.ZodOptional<z.ZodString>
 }> = z.object({
 	amount: z.number().positive('amount must be a positive number'),
@@ -95,6 +96,7 @@ export const UpdateIncomeParamsSchema: z.ZodObject<{
 		.number()
 		.positive('categoryId must be a positive number')
 		.optional(),
+	placeUid: z.string().optional(),
 	comment: z
 		.string()
 		.max(100, 'comment must not exceed 100 characters')

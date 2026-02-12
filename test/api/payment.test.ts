@@ -199,6 +199,7 @@ describe('PaymentApi', () => {
 				fromAccountId: 1,
 				genreId: 10101,
 				categoryId: 101,
+				placeUid: 'zm-test',
 				comment: 'test',
 			})
 

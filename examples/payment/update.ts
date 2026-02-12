@@ -13,6 +13,7 @@ const params: UpdatePaymentParams = {
 	fromAccountId: 1,
 	genreId: 10101,
 	categoryId: 101,
+	placeUid: 'test',
 	comment: 'test',
 }
 

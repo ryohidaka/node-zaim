@@ -131,6 +131,7 @@ const payment = await zaim.payment.update({
 	date: '2026-02-04',
 	genreId: 10101,
 	categoryId: 101,
+	placeUid: 'zm-12345'
 	comment: 'test',
 });
 console.log(payment);

@@ -79,7 +79,7 @@ export class IncomeApi {
 		id: number,
 		params: UpdateIncomeParams,
 	): Promise<IncomeUpdateResponse> {
-		const { amount, date, toAccountId, categoryId, comment } =
+		const { amount, date, toAccountId, categoryId, placeUid, comment } =
 			UpdateIncomeParamsSchema.parse(params)
 
 		const body: Record<string, string | number> = {
@@ -90,6 +90,7 @@ export class IncomeApi {
 
 		if (toAccountId !== undefined) body.from_account_id = toAccountId
 		if (categoryId !== undefined) body.category_id = categoryId
+		if (placeUid !== undefined) body.place_uid = placeUid
 		if (comment) body.comment = comment
 
 		const response = await this.client

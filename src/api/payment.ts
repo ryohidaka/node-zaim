@@ -90,8 +90,15 @@ export class PaymentApi {
 		id: number,
 		params: UpdatePaymentParams,
 	): Promise<PaymentUpdateResponse> {
-		const { amount, date, fromAccountId, genreId, categoryId, comment } =
-			UpdatePaymentParamsSchema.parse(params)
+		const {
+			amount,
+			date,
+			fromAccountId,
+			genreId,
+			categoryId,
+			placeUid,
+			comment,
+		} = UpdatePaymentParamsSchema.parse(params)
 
 		const body: Record<string, string | number> = {
 			mapping: 1,
@@ -102,6 +109,7 @@ export class PaymentApi {
 		if (fromAccountId !== undefined) body.from_account_id = fromAccountId
 		if (genreId !== undefined) body.genre_id = genreId
 		if (categoryId !== undefined) body.category_id = categoryId
+		if (placeUid !== undefined) body.place_uid = placeUid
 		if (comment) body.comment = comment
 
 		const response = await this.client

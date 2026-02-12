@@ -131,7 +131,7 @@ const payment = await zaim.payment.update({
 	date: '2026-02-04',
 	genreId: 10101,
 	categoryId: 101,
-	placeUid: 'zm-12345'
+	placeUid: 'zm-12345',
 	comment: 'test',
 });
 console.log(payment);
@@ -157,7 +157,7 @@ const income = await zaim.income.create({
 	categoryId: 101,
 	amount: 1,
 	date: '2026-02-04',
-	place: 'test'
+	place: 'test',
 	comment: 'test',
 });
 console.log(income);
@@ -172,7 +172,7 @@ const income = await zaim.income.update({
 	categoryId: 101,
 	amount: 1,
 	date: '2026-02-04',
-	placeUid: 'zm-12345'
+	placeUid: 'zm-12345',
 	comment: 'test',
 });
 console.log(income);
@@ -198,7 +198,7 @@ const transfer = await zaim.transfer.create({
 	amount: 1,
 	date: '2026-02-04',
 	fromAccountId: 1,
-	toAccountId: 1
+	toAccountId: 1,
 	comment: 'test',
 });
 console.log(transfer);

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/ryohidaka/node-zaim/compare/v0.2.1...v0.2.2) (2026-02-20)
+
+
+### Bug Fixes
+
+* resolve type error when calling list() with params but no groupBy ([39917a0](https://github.com/ryohidaka/node-zaim/commit/39917a074c5fc14c3458972e1c47ed996142935f))
+
 ## [0.2.1](https://github.com/ryohidaka/node-zaim/compare/v0.2.0...v0.2.1) (2026-02-12)
 
 

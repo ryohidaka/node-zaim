@@ -1,4 +1,3 @@
-import type z from 'zod'
 import type { Zaim } from '@/client'
 import {
 	CreatePaymentParamsSchema,
@@ -7,11 +6,13 @@ import {
 	MoneyUpdateResponseSchema,
 	UpdatePaymentParamsSchema,
 } from '@/schemas'
-import type { CreatePaymentParams, UpdatePaymentParams } from '@/types'
-
-type PaymentCreateResponse = z.infer<typeof MoneyCreateResponseSchema>
-type PaymentUpdateResponse = z.infer<typeof MoneyUpdateResponseSchema>
-type PaymentDeleteResponse = z.infer<typeof MoneyDeleteResponseSchema>
+import type {
+	CreatePaymentParams,
+	MoneyCreateResponse,
+	MoneyDeleteResponse,
+	MoneyUpdateResponse,
+	UpdatePaymentParams,
+} from '@/types'
 
 export class PaymentApi {
 	constructor(private client: Zaim) {}
@@ -36,7 +37,7 @@ export class PaymentApi {
 	 * console.log(result.money.id); // 11820767
 	 * ```
 	 */
-	async create(params: CreatePaymentParams): Promise<PaymentCreateResponse> {
+	async create(params: CreatePaymentParams): Promise<MoneyCreateResponse> {
 		const {
 			categoryId,
 			genreId,
@@ -89,7 +90,7 @@ export class PaymentApi {
 	async update(
 		id: number,
 		params: UpdatePaymentParams,
-	): Promise<PaymentUpdateResponse> {
+	): Promise<MoneyUpdateResponse> {
 		const {
 			amount,
 			date,
@@ -133,7 +134,7 @@ export class PaymentApi {
 	 * console.log(result.money.id); // 11820767
 	 * ```
 	 */
-	async delete(id: number): Promise<PaymentDeleteResponse> {
+	async delete(id: number): Promise<MoneyDeleteResponse> {
 		const response = await this.client
 			.getHttpClient()
 			.delete(`/v2/home/money/payment/${id}`)

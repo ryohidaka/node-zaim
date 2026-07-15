@@ -1,8 +1,8 @@
-import type { z } from 'zod'
 import { VerifyResponseSchema } from '@/schemas'
+import type { User } from '@/types'
 import type { Zaim } from '../client'
 
-export type VerifyResponse = z.infer<typeof VerifyResponseSchema>
+export type { User }
 
 export class UserApi {
 	constructor(private client: Zaim) {}
@@ -32,7 +32,7 @@ export class UserApi {
 	 * console.log(user.currencyCode); // 'JPY'
 	 * ```
 	 */
-	async verify(): Promise<VerifyResponse['me']> {
+	async verify(): Promise<User> {
 		const response = await this.client
 			.getHttpClient()
 			.get('/v2/home/user/verify')

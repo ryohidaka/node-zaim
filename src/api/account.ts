@@ -1,14 +1,11 @@
-import type { z } from 'zod'
 import {
 	AccountListResponseSchema,
 	DefaultAccountListResponseSchema,
-} from '@/schemas/account'
+} from '@/schemas'
+import type { Account, DefaultAccount } from '@/types'
 import type { Zaim } from '../client'
 
-export type AccountResponse = z.infer<typeof AccountListResponseSchema>
-export type DefaultAccountResponse = z.infer<
-	typeof DefaultAccountListResponseSchema
->
+export type { Account, DefaultAccount }
 
 export class AccountApi {
 	constructor(private client: Zaim) {}
@@ -30,7 +27,7 @@ export class AccountApi {
 	 * console.log(accounts[0].name); // 'Credit card'
 	 * ```
 	 */
-	async list(): Promise<AccountResponse['accounts']> {
+	async list(): Promise<Account[]> {
 		const response = await this.client.getHttpClient().get('/v2/home/account')
 		const { accounts } = AccountListResponseSchema.parse(response)
 		return accounts
@@ -60,9 +57,7 @@ export class AccountApi {
 	 * console.log(defaultAccountsEn[0].name); // 'Wallet'
 	 * ```
 	 */
-	async default(
-		lang: string = 'ja',
-	): Promise<DefaultAccountResponse['accounts']> {
+	async default(lang: string = 'ja'): Promise<DefaultAccount[]> {
 		const response = await this.client
 			.getHttpClient()
 			.get(`/v2/account?lang=${lang}`)

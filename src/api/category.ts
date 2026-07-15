@@ -1,14 +1,11 @@
-import type { z } from 'zod'
 import {
 	CategoryListResponseSchema,
 	DefaultCategoryListResponseSchema,
 } from '@/schemas'
+import type { Category, DefaultCategory } from '@/types'
 import type { Zaim } from '../client'
 
-export type CategoryResponse = z.infer<typeof CategoryListResponseSchema>
-export type DefaultCategoryResponse = z.infer<
-	typeof DefaultCategoryListResponseSchema
->
+export type { Category, DefaultCategory }
 
 export class CategoryApi {
 	constructor(private client: Zaim) {}
@@ -30,7 +27,7 @@ export class CategoryApi {
 	 * console.log(categories[0].name); // 'Food'
 	 * ```
 	 */
-	async list(): Promise<CategoryResponse['categories']> {
+	async list(): Promise<Category[]> {
 		const response = await this.client.getHttpClient().get('/v2/home/category')
 		const { categories } = CategoryListResponseSchema.parse(response)
 		return categories
@@ -60,9 +57,7 @@ export class CategoryApi {
 	 * console.log(defaultCategoriesEn[0].name); // 'Food'
 	 * ```
 	 */
-	async default(
-		lang: string = 'ja',
-	): Promise<DefaultCategoryResponse['categories']> {
+	async default(lang: string = 'ja'): Promise<DefaultCategory[]> {
 		const response = await this.client
 			.getHttpClient()
 			.get(`/v2/category?lang=${lang}`)

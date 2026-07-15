@@ -1,14 +1,11 @@
-import type { z } from 'zod'
 import {
 	DefaultGenreListResponseSchema,
 	GenreListResponseSchema,
 } from '@/schemas'
+import type { DefaultGenre, Genre } from '@/types'
 import type { Zaim } from '../client'
 
-export type GenreResponse = z.infer<typeof GenreListResponseSchema>
-export type DefaultGenreResponse = z.infer<
-	typeof DefaultGenreListResponseSchema
->
+export type { DefaultGenre, Genre }
 
 export class GenreApi {
 	constructor(private client: Zaim) {}
@@ -30,7 +27,7 @@ export class GenreApi {
 	 * console.log(genres[0].name); // 'Geocery'
 	 * ```
 	 */
-	async list(): Promise<GenreResponse['genres']> {
+	async list(): Promise<Genre[]> {
 		const response = await this.client.getHttpClient().get('/v2/home/genre')
 		const { genres } = GenreListResponseSchema.parse(response)
 		return genres
@@ -60,7 +57,7 @@ export class GenreApi {
 	 * console.log(defaultGenresEn[0].name); // 'Geocery'
 	 * ```
 	 */
-	async default(lang: string = 'ja'): Promise<DefaultGenreResponse['genres']> {
+	async default(lang: string = 'ja'): Promise<DefaultGenre[]> {
 		const response = await this.client
 			.getHttpClient()
 			.get(`/v2/genre?lang=${lang}`)

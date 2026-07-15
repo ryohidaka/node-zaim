@@ -1,4 +1,3 @@
-import type z from 'zod'
 import type { Zaim } from '@/client'
 import {
 	CreateTransferParamsSchema,
@@ -7,11 +6,13 @@ import {
 	MoneyUpdateResponseSchema,
 	UpdateTransferParamsSchema,
 } from '@/schemas'
-import type { CreateTransferParams, UpdateTransferParams } from '@/types'
-
-type TransferCreateResponse = z.infer<typeof MoneyCreateResponseSchema>
-type TransferUpdateResponse = z.infer<typeof MoneyUpdateResponseSchema>
-type TransferDeleteResponse = z.infer<typeof MoneyDeleteResponseSchema>
+import type {
+	CreateTransferParams,
+	MoneyCreateResponse,
+	MoneyDeleteResponse,
+	MoneyUpdateResponse,
+	UpdateTransferParams,
+} from '@/types'
 
 export class TransferApi {
 	constructor(private client: Zaim) {}
@@ -34,7 +35,7 @@ export class TransferApi {
 	 * console.log(result.money.id); // 11820767
 	 * ```
 	 */
-	async create(params: CreateTransferParams): Promise<TransferCreateResponse> {
+	async create(params: CreateTransferParams): Promise<MoneyCreateResponse> {
 		const { amount, date, fromAccountId, toAccountId, comment } =
 			CreateTransferParamsSchema.parse(params)
 
@@ -74,7 +75,7 @@ export class TransferApi {
 	async update(
 		id: number,
 		params: UpdateTransferParams,
-	): Promise<TransferUpdateResponse> {
+	): Promise<MoneyUpdateResponse> {
 		const { amount, date, comment } = UpdateTransferParamsSchema.parse(params)
 
 		const body: Record<string, string | number> = {
@@ -104,7 +105,7 @@ export class TransferApi {
 	 * console.log(result.money.id); // 11820767
 	 * ```
 	 */
-	async delete(id: number): Promise<TransferDeleteResponse> {
+	async delete(id: number): Promise<MoneyDeleteResponse> {
 		const response = await this.client
 			.getHttpClient()
 			.delete(`/v2/home/money/transfer/${id}`)

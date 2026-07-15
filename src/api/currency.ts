@@ -1,8 +1,8 @@
-import type { z } from 'zod'
+import type { Currency } from '@/types'
 import type { Zaim } from '../client'
 import { CurrencyListResponseSchema } from '../schemas'
 
-export type CurrencyResponse = z.infer<typeof CurrencyListResponseSchema>
+export type { Currency }
 
 export class CurrencyApi {
 	constructor(private client: Zaim) {}
@@ -24,7 +24,7 @@ export class CurrencyApi {
 	 * console.log(currencies[0].currencyCode); // 'AUD'
 	 * ```
 	 */
-	async list(): Promise<CurrencyResponse['currencies']> {
+	async list(): Promise<Currency[]> {
 		const response = await this.client.getHttpClient().get('/v2/currency')
 		const { currencies } = CurrencyListResponseSchema.parse(response)
 		return currencies

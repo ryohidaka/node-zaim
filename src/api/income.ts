@@ -1,4 +1,3 @@
-import type z from 'zod'
 import type { Zaim } from '@/client'
 import {
 	CreateIncomeParamsSchema,
@@ -7,11 +6,13 @@ import {
 	MoneyUpdateResponseSchema,
 	UpdateIncomeParamsSchema,
 } from '@/schemas'
-import type { CreateIncomeParams, UpdateIncomeParams } from '@/types'
-
-type IncomeCreateResponse = z.infer<typeof MoneyCreateResponseSchema>
-type IncomeUpdateResponse = z.infer<typeof MoneyUpdateResponseSchema>
-type IncomeDeleteResponse = z.infer<typeof MoneyDeleteResponseSchema>
+import type {
+	CreateIncomeParams,
+	MoneyCreateResponse,
+	MoneyDeleteResponse,
+	MoneyUpdateResponse,
+	UpdateIncomeParams,
+} from '@/types'
 
 export class IncomeApi {
 	constructor(private client: Zaim) {}
@@ -35,7 +36,7 @@ export class IncomeApi {
 	 * console.log(result.money.id); // 11820767
 	 * ```
 	 */
-	async create(params: CreateIncomeParams): Promise<IncomeCreateResponse> {
+	async create(params: CreateIncomeParams): Promise<MoneyCreateResponse> {
 		const { categoryId, amount, date, toAccountId, place, comment } =
 			CreateIncomeParamsSchema.parse(params)
 
@@ -78,7 +79,7 @@ export class IncomeApi {
 	async update(
 		id: number,
 		params: UpdateIncomeParams,
-	): Promise<IncomeUpdateResponse> {
+	): Promise<MoneyUpdateResponse> {
 		const { amount, date, toAccountId, categoryId, placeUid, comment } =
 			UpdateIncomeParamsSchema.parse(params)
 
@@ -114,7 +115,7 @@ export class IncomeApi {
 	 * console.log(result.money.id); // 11820767
 	 * ```
 	 */
-	async delete(id: number): Promise<IncomeDeleteResponse> {
+	async delete(id: number): Promise<MoneyDeleteResponse> {
 		const response = await this.client
 			.getHttpClient()
 			.delete(`/v2/home/money/income/${id}`)

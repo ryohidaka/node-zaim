@@ -1,14 +1,12 @@
-import type { z } from 'zod'
 import {
 	GroupedMoneyListResponseSchema,
 	MoneyListResponseSchema,
 	MoneyQueryParamsSchema,
 } from '@/schemas'
-import type { MoneyQueryParams } from '@/types'
+import type { GroupedMoney, Money, MoneyQueryParams } from '@/types'
 import type { Zaim } from '../client'
 
-type MoneyListResponse = z.infer<typeof MoneyListResponseSchema>
-type GroupedMoneyListResponse = z.infer<typeof GroupedMoneyListResponseSchema>
+export type { GroupedMoney, Money }
 
 export class MoneyApi {
 	constructor(private client: Zaim) {}
@@ -49,13 +47,9 @@ export class MoneyApi {
 	 */
 	async list(
 		params: Omit<MoneyQueryParams, 'groupBy'> & { groupBy: 'receipt_id' },
-	): Promise<GroupedMoneyListResponse['money']>
-	async list(
-		params?: Omit<MoneyQueryParams, 'groupBy'>,
-	): Promise<MoneyListResponse['money']>
-	async list(
-		params?: MoneyQueryParams,
-	): Promise<MoneyListResponse['money'] | GroupedMoneyListResponse['money']> {
+	): Promise<GroupedMoney[]>
+	async list(params?: Omit<MoneyQueryParams, 'groupBy'>): Promise<Money[]>
+	async list(params?: MoneyQueryParams): Promise<Money[] | GroupedMoney[]> {
 		if (params) {
 			MoneyQueryParamsSchema.parse(params)
 		}

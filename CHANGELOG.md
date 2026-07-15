@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/ryohidaka/node-zaim/compare/v0.2.2...v0.3.0) (2026-07-15)
+
+
+### Features
+
+* export API response item types ([5d6f467](https://github.com/ryohidaka/node-zaim/commit/5d6f46730ea376bec21b2815812ad30982ed1cc2))
+
 ## [0.2.2](https://github.com/ryohidaka/node-zaim/compare/v0.2.1...v0.2.2) (2026-02-20)
 
 
